@@ -13,17 +13,14 @@ Flujo de trabajo (Git Flow)
 Usamos tres tipos de ramas principales:
 
 Rama	Propósito
-main	Versión estable y final del sistema
-develop	Rama de integración (donde se unen las features)
-feature/nombre-de-la-tarea	Rama temporal de cada integrante para desarrollar una funcionalidad
-
+-main: Versión estable y final del sistema.
+-develop: Rama de integración (donde se unen las features).
+-feature/nombre-de-la-tarea: Rama temporal de cada integrante para desarrollar una funcionalidad.
 
 Crear una rama para tu tarea
 git checkout develop
 git pull origin develop
 git checkout -b feature/nombre-de-la-tarea
-
-
 
 Subir cambios
 git add .
