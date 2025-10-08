@@ -18,14 +18,14 @@ develop	Rama de integración (donde se unen las features)
 feature/nombre-de-la-tarea	Rama temporal de cada integrante para desarrollar una funcionalidad
 
 
-💻 Crear una rama para tu tarea
+Crear una rama para tu tarea
 git checkout develop
 git pull origin develop
 git checkout -b feature/nombre-de-la-tarea
 
 
 
-🧱 Subir cambios
+Subir cambios
 git add .
 git commit -m "Agrego [nombre de la funcionalidad]"
 git push origin feature/nombre-de-la-tarea
