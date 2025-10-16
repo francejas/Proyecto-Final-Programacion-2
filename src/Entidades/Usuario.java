@@ -11,6 +11,7 @@ public abstract class Usuario {
     private RolUsuario rol;
     private boolean activo;
 
+    
     public Usuario() {
         this.id = ++contadorUsuarios;
     }
