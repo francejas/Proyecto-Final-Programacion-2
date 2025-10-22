@@ -1,4 +1,4 @@
-package Equipajes;
+package Entidades;
 
 public class EquipajeDeMano extends Equipaje{
     private Dimensiones dimensiones;

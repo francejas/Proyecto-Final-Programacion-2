@@ -1,4 +1,4 @@
-package Equipajes;
+package Entidades;
 
 public class CarryOn extends Equipaje{
     private Dimensiones dimensiones;

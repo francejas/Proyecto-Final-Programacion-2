@@ -1,4 +1,4 @@
-package Equipajes;
+package Entidades;
 
 public class EquipajeEspecial extends Equipaje{
     public EquipajeEspecial(double pesoKg) {

@@ -1,4 +1,4 @@
-package Equipajes;
+package Entidades;
 
 public class Dimensiones {
     private double altoCm;

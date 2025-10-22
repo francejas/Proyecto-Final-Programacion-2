@@ -1,4 +1,4 @@
-package Equipajes;
+package Entidades;
 
 public abstract class Equipaje {
     private static int contador=0;
