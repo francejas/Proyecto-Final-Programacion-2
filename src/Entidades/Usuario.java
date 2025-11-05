@@ -1,89 +1,100 @@
 package Entidades;
 
 import Enum.RolUsuario;
+import java.util.Objects;
 
 public abstract class Usuario {
-    private static int contadorUsuarios = 0;
-    private final int id;
+
+    private static int contadorId = 0;
+    private int id;
     private String nombre;
     private String email;
-    private String contrasena;
-    private RolUsuario rol;//admin o cliente
+    private String password;
+    private RolUsuario rol;
     private boolean activo;
 
-    
-    public Usuario() {
-        this.id = ++contadorUsuarios;
-    }
-
-    public Usuario(String nombre, String email, String contrasena) {
-        this.id = ++contadorUsuarios;
+    protected Usuario(String nombre, String email, String password, RolUsuario rol, boolean activo) {
+        this.id = ++contadorId;
         this.nombre = nombre;
         this.email = email;
-        this.contrasena = contrasena;
-        this.rol = RolUsuario.CLIENTE ;
-        this.activo = true;
+        this.password = password;
+        this.rol = rol;
+        this.activo = activo;
+    }
+
+    public static void inicializarContadorId(int maxIdEncontrado) {
+        contadorId = maxIdEncontrado;
+    }
+
+    public static int getContadorId() {
+        return contadorId;
     }
 
     public int getId() {
         return id;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getContrasena() {
-        return contrasena;
+
+    public String getPassword() {
+        return password;
     }
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+
+    public void setPassword(String password) {
+        this.password = password;
     }
+
     public RolUsuario getRol() {
         return rol;
     }
+
     public void setRol(RolUsuario rol) {
         this.rol = rol;
     }
+
     public boolean isActivo() {
         return activo;
     }
+
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
-
-
-///metodos
-    public abstract void mostrarMenu();
-
-    public abstract void registrarse();//alta
-    public abstract void iniciarSesion();
-    public abstract void cerrarSesion();
-    public abstract void actualizarPerfil();//modificacion
-    public abstract void eliminarCuenta();//baja
-    public abstract void mostrarDatosUsuario(); 
-    public abstract void mostrarMenuInicio();
-
-
-
-@Override
-    public String toString() {
-        return "Usuario [id=" + id +
-         ", nombre=" + nombre +
-          ", email=" + email +
-           ", rol=" + rol + 
-           ", activo=" + activo + "]";
-        
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(email, usuario.email);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
+    }
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", rol=" + rol +
+                ", activo=" + activo +
+                '}';
+    }
 }
-

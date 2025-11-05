@@ -1,34 +1,58 @@
 package Entidades;
-
+import Enum.EstadoReserva;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
+import java.util.Objects;
+import java.util.UUID; // Para generar un ID único
 
 public class Reserva {
 
-
     private String idReserva;
     private Cliente cliente;
-    private Itinerario itinerario;
+    private List<Itinerario> itinerarios;
     private List<Pasaje> pasajes;
     private LocalDate fechaCreacion;
     private EstadoReserva estado;
     private double costoTotal;
     private boolean activa;
 
-
-    public Reserva(Cliente cliente, Itinerario itinerario, List<Pasaje> pasajes) {
-        this.idReserva = "RES-" + UUID.randomUUID().toString().substring(0, 6);
+    public Reserva(Cliente cliente, List<Itinerario> itinerarios, List<Pasaje> pasajes) {
+        // Genera un ID único y corto (ej: "RES-a3b8c1")
+        this.idReserva = "RES-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
         this.cliente = cliente;
-        this.itinerario = itinerario;
+        this.itinerarios = itinerarios;
         this.pasajes = pasajes;
         this.fechaCreacion = LocalDate.now();
         this.estado = EstadoReserva.CONFIRMADA;
         this.activa = true;
-        calcularCostoTotal();
+        // Calcula el costo total al momento de crear la reserva
+        this.calcularCostoTotal();
     }
 
-    // --- Getters y Setters ---
+
+    public void calcularCostoTotal() {
+        double total = 0.0;
+        if (this.pasajes != null) {
+            for (Pasaje pasaje : this.pasajes) {
+                total += pasaje.calcularCostoFinal();
+            }
+        }
+        this.costoTotal = total;
+    }
+
+
+    public Pasaje buscarPasaje(String idPasaje) {
+        if (this.pasajes == null) {
+            return null;
+        }
+        for (Pasaje pasaje : this.pasajes) {
+            if (pasaje.getIdPasaje().equals(idPasaje)) {
+                return pasaje;
+            }
+        }
+        return null;
+    }
+
 
     public String getIdReserva() {
         return idReserva;
@@ -46,12 +70,12 @@ public class Reserva {
         this.cliente = cliente;
     }
 
-    public Itinerario getItinerario() {
-        return itinerario;
+    public List<Itinerario> getItinerarios() {
+        return itinerarios;
     }
 
-    public void setItinerario(Itinerario itinerario) {
-        this.itinerario = itinerario;
+    public void setItinerarios(List<Itinerario> itinerarios) {
+        this.itinerarios = itinerarios;
     }
 
     public List<Pasaje> getPasajes() {
@@ -95,13 +119,29 @@ public class Reserva {
     }
 
 
-    public void calcularCostoTotal() {
-        double total = 0.0;
-        if (this.pasajes != null) {
-            for (Pasaje pasaje : this.pasajes) {
-                total += pasaje.calcularCostoFinal();
-            }
-        }
-        this.costoTotal = total;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reserva reserva = (Reserva) o;
+        return Objects.equals(idReserva, reserva.idReserva);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idReserva);
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "idReserva='" + idReserva + '\'' +
+                ", cliente=" + (cliente != null ? cliente.getNombre() : "N/A") +
+                ", itinerarios=" + (itinerarios != null ? itinerarios.size() : 0) +
+                ", pasajes=" + (pasajes != null ? pasajes.size() : 0) +
+                ", costoTotal=" + costoTotal +
+                ", estado=" + estado +
+                ", activa=" + activa +
+                '}';
     }
 }

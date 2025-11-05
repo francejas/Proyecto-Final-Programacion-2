@@ -1,96 +1,71 @@
 package Entidades;
+import java.util.Objects;
 
 public class Avion {
-    private static int idCount = 0;
-    private final int idAvion;
-    private int cantLugaresFirstClass;
-    private int cantLugaresBusiness;
-    private int cantLugaresPremiumEconomy;
-    private int cantLugaresEconomy;
-    private boolean disponibilidadAvion;
+    private String matricula;
+    private String modelo;
+    private int capacidadEconomy;
+    private int capacidadBusiness;
 
-    public Avion(int cantLugaresFirstClass, int cantLugaresBusiness, int cantLugaresPremiumEconomy, int cantLugaresEconomy, boolean disponibilidadAvion) {
-        idCount++;
-        this.idAvion = idCount;
-        this.cantLugaresFirstClass = cantLugaresFirstClass;
-        this.cantLugaresBusiness = cantLugaresBusiness;
-        this.cantLugaresPremiumEconomy = cantLugaresPremiumEconomy;
-        this.cantLugaresEconomy = cantLugaresEconomy;
-        this.disponibilidadAvion = disponibilidadAvion;
-    }
-    public int getIdAvion() {
-        return idAvion;
+    public Avion(String matricula, String modelo, int capacidadEconomy, int capacidadBusiness) {
+        this.matricula = matricula;
+        this.modelo = modelo;
+        this.capacidadEconomy = capacidadEconomy;
+        this.capacidadBusiness = capacidadBusiness;
     }
 
-    public int getCantLugaresFirstClass() {
-        return cantLugaresFirstClass;
+    public int getCapacidadTotal() {
+        return this.capacidadEconomy + this.capacidadBusiness;
     }
 
-    public void setCantLugaresFirstClass(int cantLugaresFirstClass) {
-        this.cantLugaresFirstClass = cantLugaresFirstClass;
+
+    public String getMatricula() {
+        return matricula;
     }
 
-    public int getCantLugaresBusiness() {
-        return cantLugaresBusiness;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
-    public void setCantLugaresBusiness(int cantLugaresBusiness) {
-        this.cantLugaresBusiness = cantLugaresBusiness;
+    public String getModelo() {
+        return modelo;
     }
 
-    public int getCantLugaresPremiumEconomy() {
-        return cantLugaresPremiumEconomy;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
-    public void setCantLugaresPremiumEconomy(int cantLugaresPremiumEconomy) {
-        this.cantLugaresPremiumEconomy = cantLugaresPremiumEconomy;
+    public int getCapacidadEconomy() {
+        return capacidadEconomy;
     }
 
-    public int getCantLugaresEconomy() {
-        return cantLugaresEconomy;
+    public void setCapacidadEconomy(int capacidadEconomy) {
+        this.capacidadEconomy = capacidadEconomy;
     }
 
-    public void setCantLugaresEconomy(int cantLugaresEconomy) {
-        this.cantLugaresEconomy = cantLugaresEconomy;
+    public int getCapacidadBusiness() {
+        return capacidadBusiness;
     }
 
-    public boolean isDisponibilidadAvion() {
-        return disponibilidadAvion;
+    public void setCapacidadBusiness(int capacidadBusiness) {
+        this.capacidadBusiness = capacidadBusiness;
     }
 
-    public void setDisponibilidadAvion(boolean disponibilidadAvion) {
-        this.disponibilidadAvion = disponibilidadAvion;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Avion avion = (Avion) o;
+        return Objects.equals(matricula, avion.matricula);
     }
 
-    public boolean verificarDisponibilidad(ClaseVuelo clase){
-        return switch (clase){
-            case FIRTS_CLASS -> cantLugaresFirstClass > 0;
-            case BUSINESS -> cantLugaresBusiness > 0;
-            case PREMIUM_ECONOMY -> cantLugaresPremiumEconomy > 0;
-            case ECONOMY -> cantLugaresEconomy > 0;
-        };
+    @Override
+    public int hashCode() {
+        return Objects.hash(matricula);
     }
 
-    public boolean reservarLugar(ClaseVuelo clase){
-        if(!verificarDisponibilidad(clase)){
-            System.out.println("No hay más lugares disponibles en la clase " + clase);
-            return false;
-        }
-
-        switch(clase){
-            case FIRTS_CLASS -> cantLugaresFirstClass--;
-            case BUSINESS -> cantLugaresBusiness--;
-            case PREMIUM_ECONOMY -> cantLugaresPremiumEconomy--;
-            case ECONOMY -> cantLugaresEconomy--;
-        }
-        System.out.println("Lugar reservado en la clase " + clase);
-        return true;
-    }
-
-    public enum ClaseVuelo {
-        FIRTS_CLASS,
-        BUSINESS,
-        PREMIUM_ECONOMY,
-        ECONOMY
+    @Override
+    public String toString() {
+        return modelo + " (" + matricula + ")";
     }
 }
