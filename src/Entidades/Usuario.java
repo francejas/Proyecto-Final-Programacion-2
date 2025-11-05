@@ -8,7 +8,7 @@ public abstract class Usuario {
     private String nombre;
     private String email;
     private String contrasena;
-    private RolUsuario rol;
+    private RolUsuario rol;//admin o cliente
     private boolean activo;
 
     
@@ -16,12 +16,12 @@ public abstract class Usuario {
         this.id = ++contadorUsuarios;
     }
 
-    public Usuario(String nombre, String email, String contrasena, RolUsuario rol) {
+    public Usuario(String nombre, String email, String contrasena) {
         this.id = ++contadorUsuarios;
         this.nombre = nombre;
         this.email = email;
         this.contrasena = contrasena;
-        this.rol = rol;
+        this.rol = RolUsuario.CLIENTE ;
         this.activo = true;
     }
 
@@ -46,14 +46,42 @@ public abstract class Usuario {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+    public RolUsuario getRol() {
+        return rol;
+    }
+    public void setRol(RolUsuario rol) {
+        this.rol = rol;
+    }
+    public boolean isActivo() {
+        return activo;
+    }
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 
 
+
+///metodos
     public abstract void mostrarMenu();
 
-    public void mostrarInfo() {
-        System.out.println("ID: " + id);
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Email: " + email);
+    public abstract void registrarse();//alta
+    public abstract void iniciarSesion();
+    public abstract void cerrarSesion();
+    public abstract void actualizarPerfil();//modificacion
+    public abstract void eliminarCuenta();//baja
+    public abstract void mostrarDatosUsuario(); 
+    public abstract void mostrarMenuInicio();
+
+
+
+@Override
+    public String toString() {
+        return "Usuario [id=" + id +
+         ", nombre=" + nombre +
+          ", email=" + email +
+           ", rol=" + rol + 
+           ", activo=" + activo + "]";
+        
     }
 
 
