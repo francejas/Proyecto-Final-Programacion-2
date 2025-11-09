@@ -1,18 +1,20 @@
 package Entidades;
 
-public abstract class Equipaje {
-    private static int contador=0;
-    private int idEquipaje;
+import java.util.UUID;
+
+public abstract class Equipaje<T> {
+    private final UUID idEquipaje;
     private double pesoKg;
 
     public Equipaje(double pesoKg) {
-        contador++;
-        this.idEquipaje = contador;
+        this.idEquipaje = UUID.randomUUID();
         this.pesoKg = pesoKg;
     }
-    public Equipaje(){}
+    public Equipaje(){
+        this.idEquipaje = UUID.randomUUID();
+    }
 
-    public int getIdEquipaje() {
+    public UUID getIdEquipaje() {
         return idEquipaje;
     }
     public double getPesoKg() {
@@ -22,7 +24,7 @@ public abstract class Equipaje {
         this.pesoKg = pesoKg;
     }
 
-    abstract double calcularCosto();
+    abstract double calcularCosto(T element);
 
     @Override
     public String toString() {

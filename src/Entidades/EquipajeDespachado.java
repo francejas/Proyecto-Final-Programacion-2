@@ -1,13 +1,13 @@
 package Entidades;
 
-public class EquipajeDespachado extends  Equipaje {
+public class EquipajeDespachado extends  Equipaje<Vuelo> {
     public EquipajeDespachado(double pesoKg) {
         super(pesoKg);
     }
 
     @Override
-    public double calcularCosto() {
-        return getPesoKg()*10;
+    public double calcularCosto(Vuelo vuelo) {
+        return vuelo.getAerolinea().getCostoEquipajeDespachado();
     }
 
     @Override

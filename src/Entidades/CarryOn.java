@@ -1,29 +1,21 @@
 package Entidades;
 
-public class CarryOn extends Equipaje{
-    private Dimensiones dimensiones;
-    public CarryOn(double pesoKg, Dimensiones dimensiones) {
+public class CarryOn extends Equipaje<Vuelo>{
+    public CarryOn(double pesoKg) {
         super(pesoKg);
-        this.dimensiones = dimensiones;
     }
+    public CarryOn(){}
 
     @Override
-    public double calcularCosto() {
-        double volumen = dimensiones.getAltoCm() * dimensiones.getAnchoCm() * dimensiones.getProfundidadCm();
-
-        double costoBase = 50.0;
-        double recargoXpeso = getPesoKg() * 1.5;
-
-        double recargoVolumen = 0;
-        if(volumen > 60000){
-            recargoVolumen = (volumen - 60000)/1000;
+    public double calcularCosto(Vuelo vuelo) {
+        if(vuelo.isCarryOnGratis()){
+            return 0.0;
         }
-
-        return costoBase + recargoXpeso + recargoVolumen;
+        return vuelo.getAerolinea().getCostoCarryOn();
     }
 
     @Override
     public String toString() {
-        return "CarryOn["+super.toString()+", "+dimensiones.toString()+"]";
+        return "CarryOn["+super.toString()+" ]";
     }
 }

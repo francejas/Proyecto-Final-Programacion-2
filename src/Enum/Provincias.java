@@ -1,4 +1,4 @@
-package Entidades;
+package Enum;
 
 public enum Provincias {
         BUENOS_AIRES,
