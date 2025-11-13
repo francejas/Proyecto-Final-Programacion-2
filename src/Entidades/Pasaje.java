@@ -17,7 +17,7 @@ public class Pasaje {
     private List<Equipaje> equipajeContratado;
 
     public Pasaje(Pasajero pasajero, Vuelo vuelo, String asiento, TipoClase clase) {
-        this.idPasaje = "PAS-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        this.idPasaje = "PAS-" + UUID.randomUUID().toString();
         this.pasajero = pasajero;
         this.vuelo = vuelo;
         this.asiento = asiento;

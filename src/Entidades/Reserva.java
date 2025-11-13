@@ -3,7 +3,7 @@ import Enum.EstadoReserva;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID; // Para generar un ID único
+import java.util.UUID;
 
 public class Reserva {
 
@@ -17,8 +17,7 @@ public class Reserva {
     private boolean activa;
 
     public Reserva(Cliente cliente, List<Itinerario> itinerarios, List<Pasaje> pasajes) {
-        // Genera un ID único y corto (ej: "RES-a3b8c1")
-        this.idReserva = "RES-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        this.idReserva = "RES-" + UUID.randomUUID().toString();
         this.cliente = cliente;
         this.itinerarios = itinerarios;
         this.pasajes = pasajes;

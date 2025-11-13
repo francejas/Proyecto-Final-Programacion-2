@@ -15,7 +15,7 @@ public class Itinerario {
         if (segmentos == null || segmentos.isEmpty()) {
             throw new IllegalArgumentException("Un itinerario no puede crearse sin al menos un segmento de vuelo.");
         }
-        this.idItinerario = "ITN-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        this.idItinerario = "ITN-" + UUID.randomUUID().toString();
         this.segmentos = segmentos;
     }
 

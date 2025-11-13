@@ -25,7 +25,7 @@ public class Vuelo {
                  LocalDateTime fechaHoraLlegada, Aerolinea aerolinea, Avion avion,
                  double precioBase, boolean tieneServicioDeComida, boolean carryOnGratis) {
 
-        this.idVuelo = "VL-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        this.idVuelo = "VL-" + UUID.randomUUID().toString();
         this.origen = origen;
         this.destino = destino;
         this.fechaHoraSalida = fechaHoraSalida;

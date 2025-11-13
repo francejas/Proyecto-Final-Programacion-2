@@ -5,13 +5,13 @@ import java.util.UUID;
 
 public abstract class Equipaje {
 
-    private final UUID idEquipaje;
+    private final String idEquipaje;
 
     public Equipaje() {
-        this.idEquipaje = UUID.randomUUID();
+        this.idEquipaje = "EQP-" + UUID.randomUUID().toString();
     }
 
-    public UUID getIdEquipaje() {
+    public String getIdEquipaje() {
         return idEquipaje;
     }
 
