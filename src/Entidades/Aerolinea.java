@@ -1,8 +1,13 @@
 package Entidades;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Aerolinea {
     private String codigo;
@@ -12,6 +17,9 @@ public class Aerolinea {
     private double costoEquipajeDespachado;
     private double costoEquipajeEspecial;
 
+    /**
+     * Constructor principal.
+     */
     public Aerolinea(String codigo, String nombre, double costoCarryOn,
                      double costoEquipajeDespachado, double costoEquipajeEspecial) {
 
@@ -20,10 +28,54 @@ public class Aerolinea {
         this.costoCarryOn = costoCarryOn;
         this.costoEquipajeDespachado = costoEquipajeDespachado;
         this.costoEquipajeEspecial = costoEquipajeEspecial;
-        // La flota se inicializa vacía. Los aviones se deben agregar
-        // por separado a través del menú del administrador.
+        // La flota se inicializa vacía.
         this.flotaDeAviones = new ArrayList<>();
     }
+
+    /**
+     * Constructor para DESERIALIZAR desde JSON .
+     */
+
+    public Aerolinea(JSONObject json) throws JSONException {
+        this.codigo = json.getString("codigo");
+        this.nombre = json.getString("nombre");
+        this.costoCarryOn = json.getDouble("costoCarryOn");
+        this.costoEquipajeDespachado = json.getDouble("costoEquipajeDespachado");
+        this.costoEquipajeEspecial = json.getDouble("costoEquipajeEspecial");
+
+        // Deserializar la lista de aviones
+        this.flotaDeAviones = new ArrayList<>();
+        JSONArray jsonFlota = json.getJSONArray("flotaDeAviones");
+        for (int i = 0; i < jsonFlota.length(); i++) {
+            JSONObject jsonAvion = jsonFlota.getJSONObject(i);
+            // Asume que la clase Avion también tiene un constructor JSON
+            this.flotaDeAviones.add(new Avion(jsonAvion));
+        }
+    }
+
+    /**
+     * Convierte el objeto Aerolinea a formato JSON.
+     */
+    public JSONObject toJSON() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("codigo", this.codigo);
+        jsonObject.put("nombre", this.nombre);
+        jsonObject.put("costoCarryOn", this.costoCarryOn);
+        jsonObject.put("costoEquipajeDespachado", this.costoEquipajeDespachado);
+        jsonObject.put("costoEquipajeEspecial", this.costoEquipajeEspecial);
+
+        // Serializar la lista de aviones
+        JSONArray jsonFlota = new JSONArray();
+        for (Avion avion : this.flotaDeAviones) {
+            // Asume que la clase Avion tambien tiene un metodo JSON
+            jsonFlota.put(avion.toJSON());
+        }
+        jsonObject.put("flotaDeAviones", jsonFlota);
+
+        return jsonObject;
+    }
+
+    // --- Métodos de Lógica ---
 
     public void agregarAvionAlaFlota(Avion avion) {
         this.flotaDeAviones.add(avion);
@@ -33,6 +85,8 @@ public class Aerolinea {
         // Devuelve una copia para que la lista original no pueda ser modificada desde fuera.
         return new ArrayList<>(this.flotaDeAviones);
     }
+
+    // --- Getters y Setters  ---
 
     public String getCodigo() {
         return codigo;
@@ -77,6 +131,8 @@ public class Aerolinea {
     public void setCostoEquipajeEspecial(double costoEquipajeEspecial) {
         this.costoEquipajeEspecial = costoEquipajeEspecial;
     }
+
+    // --- equals(), hashCode() y toString() ---
 
     @Override
     public boolean equals(Object o) {
