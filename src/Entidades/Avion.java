@@ -1,4 +1,7 @@
 package Entidades;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 public class Avion {
@@ -7,6 +10,10 @@ public class Avion {
     private int capacidadEconomy;
     private int capacidadBusiness;
 
+    /**
+     * Constructor principal.
+     */
+
     public Avion(String matricula, String modelo, int capacidadEconomy, int capacidadBusiness) {
         this.matricula = matricula;
         this.modelo = modelo;
@@ -14,10 +21,37 @@ public class Avion {
         this.capacidadBusiness = capacidadBusiness;
     }
 
+    /**
+     * Constructor para DESERIALIZAR desde JSON.
+     */
+
+    public Avion(JSONObject json) throws JSONException {
+        this.matricula = json.getString("matricula");
+        this.modelo = json.getString("modelo");
+        this.capacidadEconomy = json.getInt("capacidadEconomy");
+        this.capacidadBusiness = json.getInt("capacidadBusiness");
+    }
+
+    /**
+     * Convierte el objeto Avion a formato JSON.
+     */
+
+    public JSONObject toJSON() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("matricula", this.matricula);
+        jsonObject.put("modelo", this.modelo);
+        jsonObject.put("capacidadEconomy", this.capacidadEconomy);
+        jsonObject.put("capacidadBusiness", this.capacidadBusiness);
+        return jsonObject;
+    }
+
+    // --- Métodos ---
+
     public int getCapacidadTotal() {
         return this.capacidadEconomy + this.capacidadBusiness;
     }
 
+    // --- Getters y Setters ---
 
     public String getMatricula() {
         return matricula;
@@ -50,6 +84,8 @@ public class Avion {
     public void setCapacidadBusiness(int capacidadBusiness) {
         this.capacidadBusiness = capacidadBusiness;
     }
+
+    // --- equals(), hashCode() y toString() ---
 
     @Override
     public boolean equals(Object o) {
