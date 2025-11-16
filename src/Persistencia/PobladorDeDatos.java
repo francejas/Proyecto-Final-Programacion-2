@@ -192,7 +192,7 @@ public class PobladorDeDatos {
         ar.agregarAvionAlaFlota(avion2_AR);
         ar.agregarAvionAlaFlota(avion3_AR);
         ar.agregarAvionAlaFlota(avion4_AR);
-        ar.agregarAvionAlaFlota(avion1_WJ); 
+        ar.agregarAvionAlaFlota(avion1_WJ);
 
         Aerolinea wj = new Aerolinea("WJ", "JetSMART", 65.0, 80.0, 180.0);
         wj.agregarAvionAlaFlota(avion2_WJ);
