@@ -1,0 +1,537 @@
+[
+    {
+        "codigoIATA": "EZE",
+        "ciudad": "Ezeiza",
+        "nombre": "Aeropuerto Internacional Ministro Pistarini"
+    },
+    {
+        "codigoIATA": "AEP",
+        "ciudad": "Buenos Aires",
+        "nombre": "Aeroparque Jorge Newbery"
+    },
+    {
+        "codigoIATA": "COR",
+        "ciudad": "Córdoba",
+        "nombre": "Aeropuerto Internacional Ingeniero Taravella"
+    },
+    {
+        "codigoIATA": "ALL",
+        "ciudad": "Allen",
+        "nombre": "Aeroclub Allen"
+    },
+    {
+        "codigoIATA": "ARR",
+        "ciudad": "Alto Río Senguer",
+        "nombre": "Aeropuerto Alto Río Senguer"
+    },
+    {
+        "codigoIATA": "ZUL",
+        "ciudad": "Azul",
+        "nombre": "Aeródromo de Azul"
+    },
+    {
+        "codigoIATA": "BHI",
+        "ciudad": "Bahía Blanca",
+        "nombre": "Aeropuerto Comandante Espora"
+    },
+    {
+        "codigoIATA": "BRC",
+        "ciudad": "Bariloche",
+        "nombre": "Aeropuerto Internacional Teniente Luis Candelaria"
+    },
+    {
+        "codigoIATA": "CVI",
+        "ciudad": "Caleta Olivia",
+        "nombre": "Aeródromo Caleta Olivia"
+    },
+    {
+        "codigoIATA": "CCT",
+        "ciudad": "Catriel",
+        "nombre": "Aeropuerto Colonia Catriel"
+    },
+    {
+        "codigoIATA": "CVH",
+        "ciudad": "Caviahue",
+        "nombre": "Aeropuerto de Caviahue"
+    },
+    {
+        "codigoIATA": "CRR",
+        "ciudad": "Ceres",
+        "nombre": "Aeropuerto Ceres"
+    },
+    {
+        "codigoIATA": "GOR",
+        "ciudad": "Chamical",
+        "nombre": "Aeropuerto Gobernador Gordillo"
+    },
+    {
+        "codigoIATA": "ITO",
+        "ciudad": "Chilecito",
+        "nombre": "Aeropuerto Chilecito"
+    },
+    {
+        "codigoIATA": "HOS",
+        "ciudad": "Chos Malal",
+        "nombre": "Aeropuerto de Chos Malal"
+    },
+    {
+        "codigoIATA": "CLX",
+        "ciudad": "Clorinda",
+        "nombre": "Aeropuerto Clorinda"
+    },
+    {
+        "codigoIATA": "CRD",
+        "ciudad": "Comodoro Rivadavia",
+        "nombre": "Aeropuerto Internacional General Enrique Mosconi"
+    },
+    {
+        "codigoIATA": "COC",
+        "ciudad": "Concordia",
+        "nombre": "Aeropuerto Comodoro Pierrestegui"
+    },
+    {
+        "codigoIATA": "CSZ",
+        "ciudad": "Coronel Suárez",
+        "nombre": "Aeroclub Brigadier Hector Eduardo Ruiz"
+    },
+    {
+        "codigoIATA": "CNQ",
+        "ciudad": "Corrientes",
+        "nombre": "Aeropuerto Internacional Doctor Fernando Piragine Niveyro"
+    },
+    {
+        "codigoIATA": "UZU",
+        "ciudad": "Curuzú Cuatiá",
+        "nombre": "Aeropuerto de Curuzú Cuatiá"
+    },
+    {
+        "codigoIATA": "CUT",
+        "ciudad": "Cutral-Co",
+        "nombre": "Aeropuerto de Cutral-Co"
+    },
+    {
+        "codigoIATA": "DOT",
+        "ciudad": "Don Torcuato",
+        "nombre": "Aeródromo de Don Torcuato (Cerrado)"
+    },
+    {
+        "codigoIATA": "EHL",
+        "ciudad": "El Bolsón",
+        "nombre": "Aeropuerto de El Bolson"
+    },
+    {
+        "codigoIATA": "FTE",
+        "ciudad": "El Calafate",
+        "nombre": "Aeropuerto Comandante Armando Tola"
+    },
+    {
+        "codigoIATA": "EMX",
+        "ciudad": "El Maitén",
+        "nombre": "Aeropuerto de El Maitén"
+    },
+    {
+        "codigoIATA": "EPA",
+        "ciudad": "El Palomar",
+        "nombre": "Aeropuerto El Palomar"
+    },
+    {
+        "codigoIATA": "ELO",
+        "ciudad": "Eldorado",
+        "nombre": "Aeroclub Alto Paraná Eldorado"
+    },
+    {
+        "codigoIATA": "EQS",
+        "ciudad": "Esquel",
+        "nombre": "Aeropuerto Brigadier General Antonio Parodi"
+    },
+    {
+        "codigoIATA": "FMA",
+        "ciudad": "Formosa",
+        "nombre": "Aeropuerto Internacional de Formosa"
+    },
+    {
+        "codigoIATA": "GPO",
+        "ciudad": "General Pico",
+        "nombre": "Aeropuerto de General Pico"
+    },
+    {
+        "codigoIATA": "GNR",
+        "ciudad": "General Roca",
+        "nombre": "Aeropuerto de General Roca"
+    },
+    {
+        "codigoIATA": "GGS",
+        "ciudad": "Gobernador Gregores",
+        "nombre": "Aeródromo Gobernador Gregores"
+    },
+    {
+        "codigoIATA": "OYA",
+        "ciudad": "Goya",
+        "nombre": "Aeropuerto Dr. Diego Nicolás Díaz Colodrero"
+    },
+    {
+        "codigoIATA": "GHU",
+        "ciudad": "Gualeguaychú",
+        "nombre": "Aeropuerto de Gualeguaychú"
+    },
+    {
+        "codigoIATA": "IGB",
+        "ciudad": "Ingeniero Jacobacci",
+        "nombre": "Aeropuerto de Ingeniero Jacobacci"
+    },
+    {
+        "codigoIATA": "ENO",
+        "ciudad": "José C. Paz",
+        "nombre": "Aeropuerto Mariano Moreno"
+    },
+    {
+        "codigoIATA": "JSM",
+        "ciudad": "José de San Martín",
+        "nombre": "Aeropuerto de José de San Martín"
+    },
+    {
+        "codigoIATA": "JNI",
+        "ciudad": "Junín",
+        "nombre": "Aeropuerto de Junín"
+    },
+    {
+        "codigoIATA": "LCM",
+        "ciudad": "La Cumbre",
+        "nombre": "Aeropuerto La Cumbre"
+    },
+    {
+        "codigoIATA": "LPG",
+        "ciudad": "La Plata",
+        "nombre": "Aeropuerto de La Plata"
+    },
+    {
+        "codigoIATA": "IRJ",
+        "ciudad": "La Rioja",
+        "nombre": "Aeropuerto Capitán Vicente Almandos Almonacid"
+    },
+    {
+        "codigoIATA": "LHS",
+        "ciudad": "Las Heras",
+        "nombre": "Aeropuerto Las Heras"
+    },
+    {
+        "codigoIATA": "LLS",
+        "ciudad": "Las Lomitas",
+        "nombre": "Aeródromo Alférez Armando Rodríguez"
+    },
+    {
+        "codigoIATA": "LCP",
+        "ciudad": "Loncopué",
+        "nombre": "Aeropuerto Teniente La Rufa"
+    },
+    {
+        "codigoIATA": "LGS",
+        "ciudad": "Malargüe",
+        "nombre": "Aeropuerto Internacional Comodoro Ricardo Salomón"
+    },
+    {
+        "codigoIATA": "MDQ",
+        "ciudad": "Mar del Plata",
+        "nombre": "Aeropuerto Internacional Astor Piazzolla"
+    },
+    {
+        "codigoIATA": "MDZ",
+        "ciudad": "Mendoza",
+        "nombre": "Aeropuerto Internacional El Plumerillo"
+    },
+    {
+        "codigoIATA": "MDX",
+        "ciudad": "Mercedes",
+        "nombre": "Aeropuerto del Iberá"
+    },
+    {
+        "codigoIATA": "RLO",
+        "ciudad": "Merlo",
+        "nombre": "Aeropuerto Internacional Valle del Conlara"
+    },
+    {
+        "codigoIATA": "MJR",
+        "ciudad": "Miramar",
+        "nombre": "Aeródromo Juan Domingo Perón"
+    },
+    {
+        "codigoIATA": "MCS",
+        "ciudad": "Monte Caseros",
+        "nombre": "Aeropuerto de Monte Caseros"
+    },
+    {
+        "codigoIATA": "NEC",
+        "ciudad": "Necochea",
+        "nombre": "Aeropuerto Edgardo Hugo Yelpo"
+    },
+    {
+        "codigoIATA": "NQN",
+        "ciudad": "Neuquén",
+        "nombre": "Aeropuerto Internacional Presidente Perón"
+    },
+    {
+        "codigoIATA": "OVR",
+        "ciudad": "Olavarría",
+        "nombre": "Aeropuerto de Olavarría"
+    },
+    {
+        "codigoIATA": "PRA",
+        "ciudad": "Paraná",
+        "nombre": "Aeropuerto General Justo José de Urquiza"
+    },
+    {
+        "codigoIATA": "AOL",
+        "ciudad": "Paso de los Libres",
+        "nombre": "Aeropuerto Internacional de Paso de los Libres"
+    },
+    {
+        "codigoIATA": "PEH",
+        "ciudad": "Pehuajó",
+        "nombre": "Aeropuerto Comodoro P. Zanni"
+    },
+    {
+        "codigoIATA": "JUJ",
+        "ciudad": "Perico",
+        "nombre": "Aeropuerto Internacional Gobernador Horacio Guzmán"
+    },
+    {
+        "codigoIATA": "PMQ",
+        "ciudad": "Perito Moreno",
+        "nombre": "Aeropuerto Perito Moreno"
+    },
+    {
+        "codigoIATA": "PSS",
+        "ciudad": "Posadas",
+        "nombre": "Aeropuerto Internacional Libertador General José de San Martín"
+    },
+    {
+        "codigoIATA": "PUD",
+        "ciudad": "Puerto Deseado",
+        "nombre": "Aeropuerto Puerto Deseado"
+    },
+    {
+        "codigoIATA": "IGR",
+        "ciudad": "Puerto Iguazú",
+        "nombre": "Aeropuerto Internacional de Puerto Iguazú"
+    },
+    {
+        "codigoIATA": "PMY",
+        "ciudad": "Puerto Madryn",
+        "nombre": "Aeropuerto El Tehuelche"
+    },
+    {
+        "codigoIATA": "ULA",
+        "ciudad": "Puerto San Julián",
+        "nombre": "Aeropuerto Capitán José Daniel Vázquez"
+    },
+    {
+        "codigoIATA": "RZA",
+        "ciudad": "Puerto Santa Cruz",
+        "nombre": "Aeropuerto de Puerto Santa Cruz"
+    },
+    {
+        "codigoIATA": "PRQ",
+        "ciudad": "Presidencia Roque Saenz Peña",
+        "nombre": "Aeropuerto de Presidencia Roque Sáenz Peña"
+    },
+    {
+        "codigoIATA": "RAF",
+        "ciudad": "Rafaela",
+        "nombre": "Aeródromo de Rafaela"
+    },
+    {
+        "codigoIATA": "RCQ",
+        "ciudad": "Reconquista",
+        "nombre": "Aeropuerto Daniel Jurkic"
+    },
+    {
+        "codigoIATA": "RES",
+        "ciudad": "Resistencia",
+        "nombre": "Aeropuerto Internacional de Resistencia"
+    },
+    {
+        "codigoIATA": "RDS",
+        "ciudad": "Rincón de los Sauces",
+        "nombre": "Aeropuerto Rincón de los Sauces"
+    },
+    {
+        "codigoIATA": "RCU",
+        "ciudad": "Río Cuarto",
+        "nombre": "Aeropuerto de Río Cuarto"
+    },
+    {
+        "codigoIATA": "RGL",
+        "ciudad": "Río Gallegos",
+        "nombre": "Aeropuerto Internacional Piloto Civil Norberto Fernández"
+    },
+    {
+        "codigoIATA": "RGA",
+        "ciudad": "Río Grande",
+        "nombre": "Aeropuerto Internacional Gob. Ramón Trejo Noel"
+    },
+    {
+        "codigoIATA": "ROY",
+        "ciudad": "Río Mayo",
+        "nombre": "Aeropuerto de Río Mayo"
+    },
+    {
+        "codigoIATA": "RYO",
+        "ciudad": "Río Turbio/Veintiocho de Noviembre",
+        "nombre": "Aeropuerto Río Turbio"
+    },
+    {
+        "codigoIATA": "ROS",
+        "ciudad": "Rosario",
+        "nombre": "Aeropuerto Internacional Rosario Islas Malvinas"
+    },
+    {
+        "codigoIATA": "SLA",
+        "ciudad": "Salta",
+        "nombre": "Aeropuerto Internacional Martín Miguel de Güemes"
+    },
+    {
+        "codigoIATA": "OES",
+        "ciudad": "San Antonio Oeste",
+        "nombre": "Aeródromo Saint Exupery"
+    },
+    {
+        "codigoIATA": "FDO",
+        "ciudad": "San Fernando",
+        "nombre": "Aeropuerto Internacional de San Fernando"
+    },
+    {
+        "codigoIATA": "CTC",
+        "ciudad": "San Fernando del Valle de Catamarca",
+        "nombre": "Aeropuerto Coronel Felipe Varela"
+    },
+    {
+        "codigoIATA": "UAQ",
+        "ciudad": "San Juan",
+        "nombre": "Aeropuerto Domingo Faustino Sarmiento"
+    },
+    {
+        "codigoIATA": "LUQ",
+        "ciudad": "San Luis",
+        "nombre": "Aeropuerto Brigadier Mayor Cesar Raúl Ojeda"
+    },
+    {
+        "codigoIATA": "AFA",
+        "ciudad": "San Rafael",
+        "nombre": "Aeropuerto Internacional Suboficial Ayudante Santiago Germano"
+    },
+    {
+        "codigoIATA": "ORA",
+        "ciudad": "San Ramón de la Nueva Orán",
+        "nombre": "Aero Club Orán"
+    },
+    {
+        "codigoIATA": "TUC",
+        "ciudad": "San Miguel de Tucumán",
+        "nombre": "Aeropuerto Internacional Teniente Benjamín Matienzo"
+    },
+    {
+        "codigoIATA": "RSA",
+        "ciudad": "Santa Rosa",
+        "nombre": "Aeropuerto de Santa Rosa"
+    },
+    {
+        "codigoIATA": "SST",
+        "ciudad": "Santa Teresita",
+        "nombre": "Aeropuerto de Santa Teresita"
+    },
+    {
+        "codigoIATA": "SDE",
+        "ciudad": "Santiago del Estero",
+        "nombre": "Aeropuerto Vicecomodoro Ángel de la Paz Aragonés"
+    },
+    {
+        "codigoIATA": "CPC",
+        "ciudad": "San Martín de los Andes",
+        "nombre": "Aeropuerto Aviador Carlos Campos"
+    },
+    {
+        "codigoIATA": "SFN",
+        "ciudad": "Sauce Viejo",
+        "nombre": "Aeropuerto de Sauce Viejo"
+    },
+    {
+        "codigoIATA": "SGV",
+        "ciudad": "Sierra Grande",
+        "nombre": "Aeródromo Sierra Grande"
+    },
+    {
+        "codigoIATA": "NCJ",
+        "ciudad": "Sunchales",
+        "nombre": "Aeropuerto de Sunchales"
+    },
+    {
+        "codigoIATA": "TDL",
+        "ciudad": "Tandil",
+        "nombre": "Aeropuerto de Tandil"
+    },
+    {
+        "codigoIATA": "TTG",
+        "ciudad": "Tartagal",
+        "nombre": "Aeropuerto de Tartagal"
+    },
+    {
+        "codigoIATA": "RHD",
+        "ciudad": "Termas de Río Hondo",
+        "nombre": "Aeropuerto Internacional Termas de Río Hondo"
+    },
+    {
+        "codigoIATA": "REL",
+        "ciudad": "Trelew",
+        "nombre": "Aeropuerto Almirante Marco Andrés Zar/Base Aeronaval Almirante Zar"
+    },
+    {
+        "codigoIATA": "OYO",
+        "ciudad": "Tres Arroyos",
+        "nombre": "Aeropuerto Municipal Primer Teniente Héctor Ricardo Volponi"
+    },
+    {
+        "codigoIATA": "USH",
+        "ciudad": "Ushuaia",
+        "nombre": "Aeropuerto Internacional Malvinas Argentinas"
+    },
+    {
+        "codigoIATA": "VCF",
+        "ciudad": "Valcheta",
+        "nombre": "Aeródromo de Valcheta"
+    },
+    {
+        "codigoIATA": "VNO",
+        "ciudad": "Venado Tuerto",
+        "nombre": "Aeródromo Municipal Tomás B. Kenny"
+    },
+    {
+        "codigoIATA": "VDM",
+        "ciudad": "Viedma",
+        "nombre": "Aeropuerto Gobernador Edgardo Castello"
+    },
+    {
+        "codigoIATA": "VDR",
+        "ciudad": "Villa Dolores",
+        "nombre": "Aeropuerto de Villa Dolores"
+    },
+    {
+        "codigoIATA": "VLG",
+        "ciudad": "Villa Gesell",
+        "nombre": "Aeropuerto de Villa Gesell"
+    },
+    {
+        "codigoIATA": "VMR",
+        "ciudad": "Villa María",
+        "nombre": "Aeropuerto Regional Presidente Néstor Kirchner"
+    },
+    {
+        "codigoIATA": "RYD",
+        "ciudad": "Villa Reynolds",
+        "nombre": "Aeropuerto de Villa Reynolds"
+    },
+    {
+        "codigoIATA": "APZ",
+        "ciudad": "Zapala",
+        "nombre": "Aeropuerto de Zapala"
+    }
+]
