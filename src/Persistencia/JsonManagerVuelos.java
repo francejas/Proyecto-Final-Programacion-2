@@ -36,29 +36,35 @@ public class JsonManagerVuelos {
         }
     }
 
-    public List<Vuelo> leerLista(){
+    public List<Vuelo> leerLista() {
         JSONTokener tokener = OperacionesLectoEscritura.leer(nombreArchivo);
-        if(tokener == null){
+        if (tokener == null) {
             return new ArrayList<>();
         }
-        try{
+        
+        try {
             JSONArray jsonArray = new JSONArray(tokener);
-            return deserializarLista(jsonArray);
-        }catch(JSONException e){
+            return deserializarLista(jsonArray); 
+            
+        } catch (JSONException e) {
+            // Un solo catch para todos los errores de formato JSON
             System.err.println("Error de formato JSON al leer la lista de vuelos: " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
         } catch (RuntimeException e) {
+            // (Opcional) Un catch genérico por si otra cosa falla
             System.err.println("Error inesperado al leer la lista de vuelos: " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
-    public List<Vuelo> deserializarLista(JSONArray jsonArray){
+
+    
+    public List<Vuelo> deserializarLista(JSONArray jsonArray) throws JSONException {
         List<Vuelo> listaVuelos = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonVuelo = jsonArray.getJSONObject(i);
-            Vuelo v = new Vuelo(jsonVuelo);
+            Vuelo v = new Vuelo(jsonVuelo); 
             listaVuelos.add(v);
         }
         return listaVuelos;
