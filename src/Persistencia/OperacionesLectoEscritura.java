@@ -1,6 +1,5 @@
-package Entidades;
+package Persistencia;
 
-import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

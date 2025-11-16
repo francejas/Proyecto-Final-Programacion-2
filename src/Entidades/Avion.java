@@ -1,96 +1,107 @@
 package Entidades;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
 
 public class Avion {
-    private static int idCount = 0;
-    private final int idAvion;
-    private int cantLugaresFirstClass;
-    private int cantLugaresBusiness;
-    private int cantLugaresPremiumEconomy;
-    private int cantLugaresEconomy;
-    private boolean disponibilidadAvion;
+    private String matricula;
+    private String modelo;
+    private int capacidadEconomy;
+    private int capacidadBusiness;
 
-    public Avion(int cantLugaresFirstClass, int cantLugaresBusiness, int cantLugaresPremiumEconomy, int cantLugaresEconomy, boolean disponibilidadAvion) {
-        idCount++;
-        this.idAvion = idCount;
-        this.cantLugaresFirstClass = cantLugaresFirstClass;
-        this.cantLugaresBusiness = cantLugaresBusiness;
-        this.cantLugaresPremiumEconomy = cantLugaresPremiumEconomy;
-        this.cantLugaresEconomy = cantLugaresEconomy;
-        this.disponibilidadAvion = disponibilidadAvion;
-    }
-    public int getIdAvion() {
-        return idAvion;
+    /**
+     * Constructor principal.
+     */
+
+    public Avion(String matricula, String modelo, int capacidadEconomy, int capacidadBusiness) {
+        this.matricula = matricula;
+        this.modelo = modelo;
+        this.capacidadEconomy = capacidadEconomy;
+        this.capacidadBusiness = capacidadBusiness;
     }
 
-    public int getCantLugaresFirstClass() {
-        return cantLugaresFirstClass;
+    /**
+     * Constructor para DESERIALIZAR desde JSON.
+     */
+
+    public Avion(JSONObject json) throws JSONException {
+        this.matricula = json.getString("matricula");
+        this.modelo = json.getString("modelo");
+        this.capacidadEconomy = json.getInt("capacidadEconomy");
+        this.capacidadBusiness = json.getInt("capacidadBusiness");
     }
 
-    public void setCantLugaresFirstClass(int cantLugaresFirstClass) {
-        this.cantLugaresFirstClass = cantLugaresFirstClass;
+    /**
+     * Convierte el objeto Avion a formato JSON.
+     */
+
+    public JSONObject toJSON() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("matricula", this.matricula);
+        jsonObject.put("modelo", this.modelo);
+        jsonObject.put("capacidadEconomy", this.capacidadEconomy);
+        jsonObject.put("capacidadBusiness", this.capacidadBusiness);
+        return jsonObject;
     }
 
-    public int getCantLugaresBusiness() {
-        return cantLugaresBusiness;
+    // --- Métodos ---
+
+    public int getCapacidadTotal() {
+        return this.capacidadEconomy + this.capacidadBusiness;
     }
 
-    public void setCantLugaresBusiness(int cantLugaresBusiness) {
-        this.cantLugaresBusiness = cantLugaresBusiness;
+    // --- Getters y Setters ---
+
+    public String getMatricula() {
+        return matricula;
     }
 
-    public int getCantLugaresPremiumEconomy() {
-        return cantLugaresPremiumEconomy;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
-    public void setCantLugaresPremiumEconomy(int cantLugaresPremiumEconomy) {
-        this.cantLugaresPremiumEconomy = cantLugaresPremiumEconomy;
+    public String getModelo() {
+        return modelo;
     }
 
-    public int getCantLugaresEconomy() {
-        return cantLugaresEconomy;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
-    public void setCantLugaresEconomy(int cantLugaresEconomy) {
-        this.cantLugaresEconomy = cantLugaresEconomy;
+    public int getCapacidadEconomy() {
+        return capacidadEconomy;
     }
 
-    public boolean isDisponibilidadAvion() {
-        return disponibilidadAvion;
+    public void setCapacidadEconomy(int capacidadEconomy) {
+        this.capacidadEconomy = capacidadEconomy;
     }
 
-    public void setDisponibilidadAvion(boolean disponibilidadAvion) {
-        this.disponibilidadAvion = disponibilidadAvion;
+    public int getCapacidadBusiness() {
+        return capacidadBusiness;
     }
 
-    public boolean verificarDisponibilidad(ClaseVuelo clase){
-        return switch (clase){
-            case FIRTS_CLASS -> cantLugaresFirstClass > 0;
-            case BUSINESS -> cantLugaresBusiness > 0;
-            case PREMIUM_ECONOMY -> cantLugaresPremiumEconomy > 0;
-            case ECONOMY -> cantLugaresEconomy > 0;
-        };
+    public void setCapacidadBusiness(int capacidadBusiness) {
+        this.capacidadBusiness = capacidadBusiness;
     }
 
-    public boolean reservarLugar(ClaseVuelo clase){
-        if(!verificarDisponibilidad(clase)){
-            System.out.println("No hay más lugares disponibles en la clase " + clase);
-            return false;
-        }
+    // --- equals(), hashCode() y toString() ---
 
-        switch(clase){
-            case FIRTS_CLASS -> cantLugaresFirstClass--;
-            case BUSINESS -> cantLugaresBusiness--;
-            case PREMIUM_ECONOMY -> cantLugaresPremiumEconomy--;
-            case ECONOMY -> cantLugaresEconomy--;
-        }
-        System.out.println("Lugar reservado en la clase " + clase);
-        return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Avion avion = (Avion) o;
+        return Objects.equals(matricula, avion.matricula);
     }
 
-    public enum ClaseVuelo {
-        FIRTS_CLASS,
-        BUSINESS,
-        PREMIUM_ECONOMY,
-        ECONOMY
+    @Override
+    public int hashCode() {
+        return Objects.hash(matricula);
+    }
+
+    @Override
+    public String toString() {
+        return modelo + " (" + matricula + ")";
     }
 }
