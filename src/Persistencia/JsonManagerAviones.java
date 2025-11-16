@@ -36,7 +36,7 @@ public class JsonManagerAviones {
         }
     }
 
-    public List<Vuelo> leerLista() {
+    public List<Avion> leerLista() {
         JSONTokener tokener = OperacionesLectoEscritura.leer(nombreArchivo);
         if (tokener == null) {
             return new ArrayList<>();
