@@ -1,6 +1,5 @@
 # AeroReserva ✈️
 ![Java CI](https://img.shields.io/badge/Java-17-blue?logo=java&logoColor=white)
-![Build](https://img.shields.io/badge/build-passing-brightgreen)
 
 AeroReserva es un proyecto académico de una plataforma de reserva de vuelos. Es una aplicación de consola construida en Java, enfocada en una arquitectura de 5 capas (Vistas, Servicios, Entidades, Persistencia, Main) y principios de POO.
 
