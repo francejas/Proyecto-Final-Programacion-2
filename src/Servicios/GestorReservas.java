@@ -20,14 +20,44 @@ import java.util.List;
  */
 public class GestorReservas {
 
-    private List<Reserva> reservas; // Lista maestra de TODAS las reservas
+    // --- Atributos ---
+
+    /**
+     * Lista maestra en memoria de TODAS las reservas del sistema.
+     */
+    private List<Reserva> reservas;
+
+    /**
+     * Especialista en persistencia (paquete Persistencia).
+     * Se usa para leer y escribir en reservas.json. Es 'final'
+     * porque se instancia una vez en el constructor.
+     */
     private final JsonManagerReservas jsonManager;
 
-    // Dependencias de otros gestores (inyectadas)
+    /**
+     * Inyección de Dependencia.
+     * Referencia al Gestor de Usuarios (creado por la clase Aplicacion).
+     * Se necesita para actualizar las millas de un cliente y para el re-linkeo.
+     */
     private final GestorUsuarios gestorUsuarios;
+
+    /**
+     * Inyección de Dependencia.
+     * Referencia al Gestor de Vuelos (creado por la clase Aplicacion).
+     * Se necesita para consultar vuelos "maestros" y para liberar/ocupar asientos.
+     */
     private final GestorVuelos gestorVuelos;
 
+    // --- Constructor ---
 
+    /**
+     * Constructor del GestorReservas.
+     * Recibe sus dependencias (otros gestores) al ser creado por la clase Aplicacion.
+     * Carga las reservas desde el JSON y realiza el re-linkeo de los Clientes.
+     *
+     * @param gestorUsuarios (Inyectado) Referencia al gestor de usuarios principal.
+     * @param gestorVuelos (Inyectado) Referencia al gestor de vuelos principal.
+     */
     public GestorReservas(GestorUsuarios gestorUsuarios, GestorVuelos gestorVuelos) {
         this.jsonManager = new JsonManagerReservas();
         this.gestorUsuarios = gestorUsuarios; // Almacena la dependencia
@@ -35,18 +65,21 @@ public class GestorReservas {
 
         // 1. Carga la lista desde el JSON.
         // En este punto, todas las reservas tienen (cliente = null)
+        // y (clienteIdTemporal = 123)
         this.reservas = jsonManager.leerLista();
 
-        // 2. Re Linkeo
-        // Itera sobre la lista cargada y "arregla" la conexión del cliente.
+        // 2. re-linkeo
+        // Itera sobre la lista cargada y arregla la conexión del cliente
+        // para evitar referencias circulares en el JSON.
         for (Reserva r : this.reservas) {
             // Busca en el gestor de usuarios al cliente por el ID temporal
             Cliente clienteDeLaReserva = (Cliente) gestorUsuarios.consulta(r.getClienteIdTemporal());
 
-            // Reconecta el objeto Cliente completo
+            // Re-conecta el objeto Cliente completo
             r.setCliente(clienteDeLaReserva);
 
-            //  Poblar el historial del cliente
+            // Poblar el historial del cliente
+            // Esto hace que cliente.getHistorialDeReservas() funcione on-demand
             if (clienteDeLaReserva != null && r.isActiva()) {
                 clienteDeLaReserva.getHistorialDeReservas().add(r);
             }
@@ -54,8 +87,9 @@ public class GestorReservas {
     }
 
     /**
-     * Metodo privado para centralizar el guardado en JSON.
-     * Llama al JsonManager para guardar la lista actual.
+     * Metodo helper privado para centralizar el guardado en JSON.
+     * Llama al JsonManager para guardar la lista 'reservas' actual.
+     * Se llama después de cualquier operación que modifique la lista de reservas.
      */
     private void guardarEnJson() {
         jsonManager.guardarLista(this.reservas);
@@ -63,14 +97,21 @@ public class GestorReservas {
 
     // --- Métodos Públicos de Lógica de Negocio ---
 
+    /**
+     * Agrega una nueva reserva a la lista, actualiza las millas del cliente
+     * y persiste los cambios.
+     * @param nuevaReserva La reserva (ya creada y con pasajes) a agregar.
+     */
     public void crearReserva(Reserva nuevaReserva) {
         this.reservas.add(nuevaReserva);
 
-        // Actualizar millas ( 1 milla por cada $10 gastados)
+        // Lógica de negocio: Actualizar millas (ej. 1 milla por cada $10 gastados)
         Cliente cliente = nuevaReserva.getCliente();
         int millasGanadas = (int) (nuevaReserva.getCostoTotal() / 10);
+        // Delega la actualización de millas al gestor correspondiente
         gestorUsuarios.actualizarMillas(cliente.getId(), cliente.getMillas() + millasGanadas);
 
+        // Guarda el estado de la lista de reservas en el JSON
         guardarEnJson();
     }
 
@@ -82,21 +123,32 @@ public class GestorReservas {
     public void cancelarReserva(String idReserva) {
         Reserva reserva = buscarReservaPorId(idReserva);
         if (reserva != null && reserva.isActiva()) {
+            // 1. Marca la reserva como inactiva (Baja Lógica)
             reserva.setActiva(false);
             reserva.setEstado(EstadoReserva.CANCELADA);
 
-            // ¡CRUCIAL! Liberar todos los asientos
+            // 2. Liberar todos los asientos
             for (Pasaje pasaje : reserva.getPasajes()) {
-                // Buscamos el vuelo "maestro" en el GestorVuelos, no la copia del JSON
+                // Busca el vuelo "maestro" en GestorVuelos (no la copia en el Pasaje)
                 Vuelo vueloMaestro = gestorVuelos.consulta(pasaje.getVuelo().getIdVuelo());
                 if (vueloMaestro != null) {
                     vueloMaestro.liberarAsiento(pasaje.getAsiento());
+
+                    // Informa al GestorVuelos que este vuelo ha sido modificado
+                    // para que GestorVuelos se encargue de persistir su propio archivo.
+                    try {
+                        // Llama al metodo PÚBLICO de GestorVuelos
+                        gestorVuelos.modificacion(vueloMaestro);
+                    } catch (DatoInvalidoException e) {
+                        // Esta excepción no debería ocurrir si la lógica es correcta
+                        System.err.println("Error al persistir la liberación de asientos: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
             }
 
-            // Guardar los cambios en AMBOS archivos
-            guardarEnJson(); // Guarda reservas.json
-            gestorVuelos.guardarLista(); // Guarda vuelos.json (con asientos libres)
+            // 3. Guarda el cambio en reservas.json
+            guardarEnJson();
         }
     }
 
@@ -124,16 +176,22 @@ public class GestorReservas {
             Vuelo vueloMaestro = gestorVuelos.consulta(pasajeACancelar.getVuelo().getIdVuelo());
             if (vueloMaestro != null) {
                 vueloMaestro.liberarAsiento(pasajeACancelar.getAsiento());
-                gestorVuelos.guardarLista(); // Persistir cambio en vuelos.json
+
+                // Informa al GestorVuelos que el mapa de asientos de este vuelo cambió
+                try {
+                    gestorVuelos.modificacion(vueloMaestro);
+                } catch (DatoInvalidoException e) {
+                    e.printStackTrace();
+                }
             }
 
-            // 2. Quitar el pasaje de la lista
+            // 2. Quitar el pasaje de la lista de la reserva
             reserva.getPasajes().remove(pasajeACancelar);
 
-            // 3. Recalcular el costo
+            // 3. Recalcular el costo total de la reserva
             reserva.calcularCostoTotal();
 
-            // 4. Guardar la reserva actualizada
+            // 4. Guardar la reserva actualizada (con un pasaje menos y nuevo precio)
             guardarEnJson();
         }
     }
@@ -146,46 +204,55 @@ public class GestorReservas {
      * @param nuevoEquipaje El objeto Equipaje a agregar.
      */
     public void agregarEquipaje(Reserva reserva, Pasaje pasaje, Equipaje nuevoEquipaje) {
-        pasaje.agregarEquipaje(nuevoEquipaje);
-        reserva.calcularCostoTotal();
-        guardarEnJson();
+        pasaje.agregarEquipaje(nuevoEquipaje); // Agrega al pasaje
+        reserva.calcularCostoTotal(); // Actualiza el total de la reserva
+        guardarEnJson(); // Persiste el cambio
     }
 
     /**
      * Cambia el asiento de un pasaje específico, validando disponibilidad.
      * @param idReserva El ID de la reserva.
      * @param idPasaje El ID del pasaje a modificar.
-     * @param nuevoAsiento El codigo del nuevo asiento.
+     * @param nuevoAsiento El código del nuevo asiento (ej. "28B").
      * @throws AsientoOcupadoException Si el nuevo asiento no está disponible.
-     * @throws DatoInvalidoException Si la reserva o pasaje no se encuentran.
+     * @throws DatoInvalidoException Si la reserva, pasaje o vuelo no se encuentran.
      */
     public void cambiarAsiento(String idReserva, String idPasaje, String nuevoAsiento)
             throws AsientoOcupadoException, DatoInvalidoException {
 
+        // 1. Validar y obtener todos los objetos necesarios
         Reserva reserva = buscarReservaPorId(idReserva);
         if (reserva == null) throw new DatoInvalidoException("Reserva no encontrada.");
 
         Pasaje pasaje = reserva.buscarPasaje(idPasaje);
         if (pasaje == null) throw new DatoInvalidoException("Pasaje no encontrado.");
 
+        // Busca el Vuelo "maestro" (de la lista de GestorVuelos)
         Vuelo vueloMaestro = gestorVuelos.consulta(pasaje.getVuelo().getIdVuelo());
         if (vueloMaestro == null) throw new DatoInvalidoException("El vuelo asociado ya no existe.");
 
-        // 1. Verificar si el nuevo asiento está libre
+        // 2. Validar la regla de negocio (disponibilidad)
         if (!vueloMaestro.isAsientoLibre(nuevoAsiento)) {
             throw new AsientoOcupadoException("El asiento " + nuevoAsiento + " ya está ocupado.");
         }
 
-        // 2. Realizar el cambio (liberar el viejo, ocupar el nuevo)
+        // 3. Realizar el cambio (liberar el viejo, ocupar el nuevo en el Vuelo "maestro")
         vueloMaestro.liberarAsiento(pasaje.getAsiento());
         vueloMaestro.ocuparAsiento(nuevoAsiento);
 
-        // 3. Actualizar el pasaje
+        // 4. Actualizar el pasaje dentro de la reserva
         pasaje.setAsiento(nuevoAsiento);
 
-        // 4. Persistir ambos cambios
+        // 5. Persistir ambos cambios (cada gestor el suyo)
         guardarEnJson(); // Guarda reservas.json (con el nuevo nro de asiento)
-        gestorVuelos.guardarLista(); // Guarda vuelos.json (con el mapa de asientos actualizado)
+
+        // Informa al GestorVuelos que el mapa de asientos cambió
+        try {
+            gestorVuelos.modificacion(vueloMaestro); // Esto guarda vuelos.json
+        } catch (DatoInvalidoException e) {
+            // Esta excepción no debería ocurrir aquí si la lógica es correcta
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -204,11 +271,11 @@ public class GestorReservas {
         Pasaje pasaje = reserva.buscarPasaje(idPasaje);
         if (pasaje == null) throw new DatoInvalidoException("Pasaje no encontrado.");
 
-        // Modifica el objeto Pasajero
+        // Modifica el objeto Pasajero (que está dentro del Pasaje)
         pasaje.getPasajero().setNombreCompleto(nuevoNombre);
         pasaje.getPasajero().setDNI(nuevoDNI);
 
-        guardarEnJson();
+        guardarEnJson(); // Persiste el cambio en reservas.json
     }
 
     /**
@@ -227,19 +294,20 @@ public class GestorReservas {
         Pasaje pasaje = reserva.buscarPasaje(idPasaje);
         if (pasaje == null) throw new DatoInvalidoException("Pasaje no encontrado.");
 
+        // Regla de negocio: no hacer un cambio innecesario
         if (pasaje.getClase() == nuevaClase) {
             throw new DatoInvalidoException("El pasaje ya es de clase " + nuevaClase);
         }
 
-        // VALIDACIÓN DE DISPONIBILIDAD (Simplificada)
-        // Un sistema real comprobaría la capacidad vs. los pasajes vendidos en esa clase.
-        // Aquí asumimos que la validación de asientos es suficiente.
-        // Si quisieras ser más estricto, deberías contar los pasajes de esa clase.
+        // (Validación de disponibilidad - simplificada)
+        // Se asume que el usuario tendrá que cambiar su asiento manualmente después,
+        // ya que este metodo solo cambia la tarifa y el tipo.
+        // Una lógica más compleja buscaría un asiento libre en la nueva cabina.
 
         // 1. Cambiar la clase
         pasaje.setClase(nuevaClase);
 
-        // 2. Recalcular el costo (ahora será más caro o más barato)
+        // 2. Recalcular el costo (el pasaje ahora cuesta más/menos)
         reserva.calcularCostoTotal();
 
         // 3. Persistir
@@ -277,6 +345,7 @@ public class GestorReservas {
         for (Reserva r : this.reservas) {
 
             // 3. Verificar todas las condiciones con un 'if'
+            // (Asegurarse de que el cliente no sea nulo antes de llamar a getId)
             if (r.getCliente() != null &&
                     r.getCliente().getId() == idCliente &&
                     r.isActiva())
