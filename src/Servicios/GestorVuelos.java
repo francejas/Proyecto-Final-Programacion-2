@@ -4,7 +4,9 @@ import Entidades.Aeropuerto;
 import Entidades.Itinerario;
 import Entidades.Vuelo;
 import Excepciones.DatoInvalidoException;
+import Excepciones.EmailYaRegistradoException;
 import Excepciones.ItinerarioNoEncontradoException;
+import Excepciones.PasswordInvalidaException;
 import Persistencia.JsonManagerVuelos;
 
 import java.time.LocalDate;
@@ -108,21 +110,30 @@ public class GestorVuelos implements Gestionable<Vuelo, String>{
 
     /**
      * Agrega un nuevo vuelo al sistema.
-     * @param vuelo El Vuelo a agregar.
+     * Este metodo implementa la firma completa de Gestionable.
+     *
      * @throws DatoInvalidoException Si los datos del vuelo son ilógicos.
+     * @throws EmailYaRegistradoException (Declarada por la interfaz, pero no usada aquí).
+     * @throws PasswordInvalidaException (Declarada por la interfaz, pero no usada aquí).
      */
     @Override
-    public void alta(Vuelo vuelo) throws DatoInvalidoException {
-        // Validación de reglas de negocio
+    public void alta(Vuelo vuelo)
+            throws EmailYaRegistradoException, PasswordInvalidaException, DatoInvalidoException
+    {
+        // 1. Validación de reglas de negocio
         if (vuelo.getPrecioBase() < 0) {
             throw new DatoInvalidoException("El precio base no puede ser negativo.");
         }
         if (vuelo.getFechaHoraLlegada().isBefore(vuelo.getFechaHoraSalida())) {
             throw new DatoInvalidoException("La fecha de llegada no puede ser anterior a la de salida.");
         }
-        
+
+        // 2. Lógica de alta
         this.vuelos.add(vuelo);
         guardarEnJson();
+
+        // Esta clase NUNCA lanzará EmailYaRegistradoException o PasswordInvalidaException,
+        // pero DEBE declararlas en la firma para cumplir con el contrato de Gestionable.
     }
 
    /**
