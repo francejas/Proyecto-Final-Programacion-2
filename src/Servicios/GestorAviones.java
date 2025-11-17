@@ -38,9 +38,7 @@ public class GestorAviones implements Gestionable<Avion, String> {
     @Override
     public void modificacion(Avion avionModificado){
         Avion avionOriginal = this.consulta(avionModificado.getMatricula());
-        if(avionOriginal == null) return;
-
-        avionOriginal.setMatricula(avionModificado.getMatricula());
+        if(avionOriginal == null) return; 
         avionOriginal.setModelo(avionModificado.getModelo());
         avionOriginal.setCapacidadBusiness(avionModificado.getCapacidadBusiness());
         avionOriginal.setCapacidadEconomy(avionModificado.getCapacidadEconomy());
