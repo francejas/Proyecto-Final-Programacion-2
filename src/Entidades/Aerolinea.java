@@ -21,7 +21,7 @@ public class Aerolinea {
      * Constructor principal.
      */
     public Aerolinea(String codigo, String nombre, double costoCarryOn,
-                     double costoEquipajeDespachado, double costoEquipajeEspecial) {
+                    double costoEquipajeDespachado, double costoEquipajeEspecial) {
 
         this.codigo = codigo;
         this.nombre = nombre;
