@@ -1,6 +1,5 @@
 package Entidades;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +8,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Representa una aerolínea en el sistema.
+ * Contiene los datos de la compañía, su flota de aviones
+ * y las reglas de negocio (precios de equipaje y estado de activación).
+ *
+ * @version 2.1 (Diseño con 'baja lógica')
+ * @since 2025-11-05
+ */
 public class Aerolinea {
     private String codigo;
     private String nombre;
@@ -18,7 +25,14 @@ public class Aerolinea {
     private double costoEquipajeEspecial;
 
     /**
-     * Constructor principal.
+     * Define si la aerolínea está activa (true) o inactiva (false).
+     * Esto permite al administrador gestionarla con alta/baja lógica.
+     */
+    private boolean activa;
+
+    /**
+     * Constructor principal (usado por el PobladorDeDatos).
+     * Una aerolínea siempre se crea como 'activa' por defecto.
      */
     public Aerolinea(String codigo, String nombre, double costoCarryOn,
                      double costoEquipajeDespachado, double costoEquipajeEspecial) {
@@ -28,20 +42,31 @@ public class Aerolinea {
         this.costoCarryOn = costoCarryOn;
         this.costoEquipajeDespachado = costoEquipajeDespachado;
         this.costoEquipajeEspecial = costoEquipajeEspecial;
-        // La flota se inicializa vacía.
         this.flotaDeAviones = new ArrayList<>();
+
+        /**
+         * Se inicializa como 'true' por defecto.
+         */
+        this.activa = true;
     }
 
     /**
-     * Constructor para DESERIALIZAR desde JSON .
+     * Constructor para DESERIALIZAR desde JSON.
+     * Lee el atributo 'activa' (debe existir).
      */
-
     public Aerolinea(JSONObject json) throws JSONException {
         this.codigo = json.getString("codigo");
         this.nombre = json.getString("nombre");
         this.costoCarryOn = json.getDouble("costoCarryOn");
         this.costoEquipajeDespachado = json.getDouble("costoEquipajeDespachado");
         this.costoEquipajeEspecial = json.getDouble("costoEquipajeEspecial");
+
+        /**
+         * Ahora usamos getBoolean(). Si el campo "activa"
+         * falta en el JSON, esto lanzará una JSONException,
+         * lo cual es correcto porque el formato sería inválido.
+         */
+        this.activa = json.getBoolean("activa");
 
         // Deserializar la lista de aviones
         this.flotaDeAviones = new ArrayList<>();
@@ -55,6 +80,7 @@ public class Aerolinea {
 
     /**
      * Convierte el objeto Aerolinea a formato JSON.
+     * Ahora también guarda el atributo 'activa'.
      */
     public JSONObject toJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -63,6 +89,11 @@ public class Aerolinea {
         jsonObject.put("costoCarryOn", this.costoCarryOn);
         jsonObject.put("costoEquipajeDespachado", this.costoEquipajeDespachado);
         jsonObject.put("costoEquipajeEspecial", this.costoEquipajeEspecial);
+
+        /**
+         * Guarda el estado 'activa' en el JSON.
+         */
+        jsonObject.put("activa", this.activa);
 
         // Serializar la lista de aviones
         JSONArray jsonFlota = new JSONArray();
@@ -82,11 +113,10 @@ public class Aerolinea {
     }
 
     public List<Avion> getFlotaDeAviones() {
-        // Devuelve una copia para que la lista original no pueda ser modificada desde fuera.
         return new ArrayList<>(this.flotaDeAviones);
     }
 
-    // --- Getters y Setters  ---
+    // --- Getters y Setters ---
 
     public String getCodigo() {
         return codigo;
@@ -132,6 +162,14 @@ public class Aerolinea {
         this.costoEquipajeEspecial = costoEquipajeEspecial;
     }
 
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
     // --- equals(), hashCode() y toString() ---
 
     @Override
@@ -149,6 +187,6 @@ public class Aerolinea {
 
     @Override
     public String toString() {
-        return nombre + " (" + codigo + ")";
+        return nombre + " (" + codigo + ") - " + (activa ? "Activa" : "Inactiva");
     }
 }
