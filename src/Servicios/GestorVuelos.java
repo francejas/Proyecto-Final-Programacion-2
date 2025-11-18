@@ -73,70 +73,63 @@ public class GestorVuelos implements Gestionable<Vuelo, String> {
      * @return Una lista de Itinerarios (directos y/o con escala).
      * @throws ItinerarioNoEncontradoException Si no se encuentra ningún resultado.
      */
-    public List<Itinerario> buscarItinerarios(String origen, String destino, LocalDate fecha)
+    public List<Itinerario> buscarItinerarios(String inputOrigen, String inputDestino, LocalDate fecha)
             throws ItinerarioNoEncontradoException {
 
-        boolean origenValido = gestorAeropuertos.validarAeropuerto(origen);
-        boolean destinoValido = gestorAeropuertos.validarAeropuerto(destino);
+        // 1. Traducir el texto del usuario a listas de aeropuertos reales
+        // Ej: "Buenos Aires" -> [EZE, AEP]
+        List<Aeropuerto> origenesPosibles = gestorAeropuertos.buscarCoincidencias(inputOrigen);
+        List<Aeropuerto> destinosPosibles = gestorAeropuertos.buscarCoincidencias(inputDestino);
+
+        if (origenesPosibles.isEmpty() || destinosPosibles.isEmpty()) {
+            throw new ItinerarioNoEncontradoException("No se encontraron aeropuertos válidos para '" + inputOrigen + "' o '" + inputDestino + "'.");
+        }
 
         List<Itinerario> resultados = new ArrayList<>();
 
-        // 1) Validacion de aeropuertos
-        if (!origenValido || !destinoValido) {
-            throw new ItinerarioNoEncontradoException("El aeropuerto de origen o destino no es válido.");
-        }
-
-        // 2) Buscar vuelos directos
+        // 2. Buscar VUELOS DIRECTOS
         for (Vuelo vuelo : vuelos) {
-            if (!vuelo.isActivo() || vuelo.getOrigen() == null || vuelo.getDestino() == null || vuelo.getFechaHoraSalida() == null) {
-                continue;
-            }
+            if (!vuelo.isActivo() || vuelo.getFechaHoraSalida() == null) continue;
 
-            boolean mismoOrigen = vuelo.getOrigen().getCodigoIATA().equalsIgnoreCase(origen);
-            boolean mismoDestino = vuelo.getDestino().getCodigoIATA().equalsIgnoreCase(destino);
-            boolean mismaFecha = vuelo.getFechaHoraSalida().toLocalDate().equals(fecha);
+            // ¿El vuelo sale de ALGUNO de los orígenes posibles?
+            boolean origenMatch = origenesPosibles.contains(vuelo.getOrigen());
+            // ¿El vuelo llega a ALGUNO de los destinos posibles?
+            boolean destinoMatch = destinosPosibles.contains(vuelo.getDestino());
 
-            if (mismoOrigen && mismoDestino && mismaFecha) {
+            boolean fechaMatch = vuelo.getFechaHoraSalida().toLocalDate().equals(fecha);
+
+            if (origenMatch && destinoMatch && fechaMatch) {
                 resultados.add(new Itinerario(List.of(vuelo)));
             }
         }
 
-        // 3) Buscar vuelos con 1 escala
+        // 3. Buscar VUELOS CON 1 ESCALA
         for (Vuelo v1 : vuelos) {
+            // Filtros básicos para v1
+            if (!v1.isActivo() || v1.getFechaHoraSalida() == null) continue;
+            if (!v1.getFechaHoraSalida().toLocalDate().equals(fecha)) continue;
 
-            // Primero, validamos todos los nulls para v1 (igual que en la búsqueda de directos)
-            if (!v1.isActivo() ||
-                    v1.getOrigen() == null ||
-                    v1.getDestino() == null || // El destino de v1 es la escala
-                    v1.getFechaHoraSalida() == null ||
-                    v1.getFechaHoraLlegada() == null) { // Necesario para la conexión
-                continue;
-            }
+            // v1 debe salir de ALGUNO de los orígenes posibles
+            if (!origenesPosibles.contains(v1.getOrigen())) continue;
 
-            // Ahora que sabemos que no son null, podemos usarlos
-            if (!v1.getOrigen().getCodigoIATA().equalsIgnoreCase(origen) ||
-                    !v1.getFechaHoraSalida().toLocalDate().equals(fecha)) {
-                continue;
-            }
+            Aeropuerto escala = v1.getDestino();
 
-            Aeropuerto aeropuertoEscala = v1.getDestino();
-            // Evitar buscar escalas en el destino final
-            if (aeropuertoEscala.getCodigoIATA().equalsIgnoreCase(destino)) {
-                continue;
-            }
+            // Optimización: La escala no puede ser uno de los destinos finales
+            if (destinosPosibles.contains(escala)) continue;
 
             for (Vuelo v2 : vuelos) {
-                if (!v2.isActivo() ||
-                        v2.getOrigen() == null ||
-                        !v2.getOrigen().equals(aeropuertoEscala) ||
-                        v2.getDestino() == null ||
-                        !v2.getDestino().getCodigoIATA().equalsIgnoreCase(destino) ||
-                        v2.getFechaHoraSalida() == null) {
-                    continue;
-                }
+                if (!v2.isActivo() || v2.getFechaHoraSalida() == null) continue;
 
-                // Validar que la conexión sea posible (ej. al menos 2 horas de espera)
-                if (v2.getFechaHoraSalida().isAfter(v1.getFechaHoraLlegada().plusHours(2))) {
+                // Conexión estricta: v2 debe salir de donde llegó v1
+                if (!v2.getOrigen().equals(escala)) continue;
+
+                // v2 debe llegar a ALGUNO de los destinos finales posibles
+                if (!destinosPosibles.contains(v2.getDestino())) continue;
+
+                // Validar tiempo (v2 sale después de que v1 llega)
+                if (v1.getFechaHoraLlegada() != null &&
+                        v2.getFechaHoraSalida().isAfter(v1.getFechaHoraLlegada().plusHours(2))) {
+
                     List<Vuelo> segmentos = new ArrayList<>();
                     segmentos.add(v1);
                     segmentos.add(v2);
@@ -146,9 +139,8 @@ public class GestorVuelos implements Gestionable<Vuelo, String> {
         }
 
         if (resultados.isEmpty()) {
-            throw new ItinerarioNoEncontradoException("No se encontraron vuelos ni conexiones para la ruta y fecha seleccionadas.");
+            throw new ItinerarioNoEncontradoException("No se encontraron itinerarios disponibles.");
         }
-
         return resultados;
     }
 

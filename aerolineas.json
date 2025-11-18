@@ -1,0 +1,114 @@
+[
+    {
+        "codigo": "AR",
+        "costoEquipajeEspecial": 150,
+        "costoCarryOn": 50,
+        "flotaDeAviones": [
+            {
+                "capacidadEconomy": 240,
+                "matricula": "LV-FNI",
+                "capacidadBusiness": 24,
+                "modelo": "Airbus A330"
+            },
+            {
+                "capacidadEconomy": 150,
+                "matricula": "LV-GKE",
+                "capacidadBusiness": 12,
+                "modelo": "Boeing 737-800"
+            },
+            {
+                "capacidadEconomy": 245,
+                "matricula": "LV-HQB",
+                "capacidadBusiness": 24,
+                "modelo": "Airbus A330-200"
+            },
+            {
+                "capacidadEconomy": 160,
+                "matricula": "LV-KFW",
+                "capacidadBusiness": 12,
+                "modelo": "Boeing 737-MAX 8"
+            },
+            {
+                "capacidadEconomy": 90,
+                "matricula": "LV-JYR",
+                "capacidadBusiness": 6,
+                "modelo": "Embraer 190"
+            }
+        ],
+        "nombre": "Aerolíneas Argentinas",
+        "costoEquipajeDespachado": 70,
+        "activa": true
+    },
+    {
+        "codigo": "WJ",
+        "costoEquipajeEspecial": 200,
+        "costoCarryOn": 100,
+        "flotaDeAviones": [
+            {
+                "capacidadEconomy": 186,
+                "matricula": "LV-KJA",
+                "capacidadBusiness": 0,
+                "modelo": "Airbus A320"
+            },
+            {
+                "capacidadEconomy": 186,
+                "matricula": "LV-KJD",
+                "capacidadBusiness": 0,
+                "modelo": "Airbus A320neo"
+            }
+        ],
+        "nombre": "JetSMART",
+        "costoEquipajeDespachado": 90,
+        "activa": true
+    },
+    {
+        "codigo": "FO",
+        "costoEquipajeEspecial": 175,
+        "costoCarryOn": 60,
+        "flotaDeAviones": [
+            {
+                "capacidadEconomy": 189,
+                "matricula": "LV-KAY",
+                "capacidadBusiness": 0,
+                "modelo": "Boeing 737-800"
+            },
+            {
+                "capacidadEconomy": 189,
+                "matricula": "LV-KEF",
+                "capacidadBusiness": 0,
+                "modelo": "Boeing 737-800"
+            }
+        ],
+        "nombre": "Flybondi",
+        "costoEquipajeDespachado": 75,
+        "activa": true
+    },
+    {
+        "codigo": "LD",
+        "costoEquipajeEspecial": 200,
+        "costoCarryOn": 70,
+        "flotaDeAviones": [{
+            "capacidadEconomy": 70,
+            "matricula": "LV-CDA",
+            "capacidadBusiness": 8,
+            "modelo": "Fokker F28"
+        }],
+        "nombre": "LADE",
+        "costoEquipajeDespachado": 90,
+        "activa": true
+    },
+    {
+        "codigo": "AN",
+        "costoEquipajeEspecial": 160,
+        "costoCarryOn": 55,
+        "flotaDeAviones": [{
+            "capacidadEconomy": 180,
+            "matricula": "LV-WGN",
+            "capacidadBusiness": 15,
+            "modelo": "Boeing 737-800"
+        }],
+        "nombre": "Andes Líneas Aéreas",
+        "costoEquipajeDespachado": 70,
+        "activa": true
+    }
+]

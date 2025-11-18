@@ -1,0 +1,54 @@
+[
+    {
+        "password": "AdminPass1!",
+        "id": 1,
+        "nombre": "Admin Principal",
+        "email": "admin@aeropro.com",
+        "rol": "ADMINISTRADOR",
+        "activo": true
+    },
+    {
+        "fechaDeNacimiento": "1980-05-15",
+        "password": "JuanPass1!",
+        "millas": 509,
+        "id": 2,
+        "nombre": "Juan Perez",
+        "email": "juan@mail.com",
+        "rol": "CLIENTE",
+        "DNI": "25111222",
+        "activo": true
+    },
+    {
+        "fechaDeNacimiento": "1990-10-20",
+        "password": "MariaPass1!",
+        "millas": 1200,
+        "id": 3,
+        "nombre": "Maria Garcia",
+        "email": "maria@mail.com",
+        "rol": "CLIENTE",
+        "DNI": "30333444",
+        "activo": true
+    },
+    {
+        "fechaDeNacimiento": "1995-02-10",
+        "password": "CarlosPass1!",
+        "millas": 0,
+        "id": 4,
+        "nombre": "Carlos Lopez",
+        "email": "carlos@mail.com",
+        "rol": "CLIENTE",
+        "DNI": "32555666",
+        "activo": false
+    },
+    {
+        "fechaDeNacimiento": "1985-11-30",
+        "password": "AnaPass1!",
+        "millas": 200,
+        "id": 5,
+        "nombre": "Ana Martinez",
+        "email": "ana@mail.com",
+        "rol": "CLIENTE",
+        "DNI": "28777888",
+        "activo": true
+    }
+]

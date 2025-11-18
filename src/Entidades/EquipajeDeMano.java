@@ -8,8 +8,8 @@ public class EquipajeDeMano extends Equipaje {
     /**
      * Constructor para un nuevo EquipajeDeMano.
      */
-    public EquipajeDeMano() {
-        super();
+    public EquipajeDeMano(double precio) {
+        super(precio);
     }
 
     /**
@@ -19,23 +19,4 @@ public class EquipajeDeMano extends Equipaje {
         super(json);
     }
 
-    /**
-     * Convierte el objeto EquipajeDeMano a formato JSON.
-     */
-    public JSONObject toJSON() throws JSONException {
-        // Llama al metodo del padre (que guarda ID y "tipoEquipaje")
-        JSONObject jsonObject = super.toJSON();
-        return jsonObject;
-    }
-
-    @Override
-    public double calcularCosto(Vuelo vuelo) {
-        // siempre es gratis.
-        return 0.0;
-    }
-
-    @Override
-    public String toString() {
-        return "EquipajeDeMano[" + super.toString() + "]";
-    }
 }

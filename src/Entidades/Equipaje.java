@@ -9,44 +9,46 @@ import java.util.UUID;
 public abstract class Equipaje {
 
     private final String idEquipaje;
+    private final double precioCongelado; // ¡Nuevo!
 
     /**
      * Constructor para un nuevo equipaje.
+     * Recibe el precio calculado y lo congela para siempre.
      */
-    public Equipaje() {
+    public Equipaje(double precio) {
         this.idEquipaje = "EQP-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        this.precioCongelado = precio;
     }
 
     /**
      * Constructor para DESERIALIZAR desde JSON.
-     * Lee el ID del objeto JSON.
      */
     public Equipaje(JSONObject json) throws JSONException {
         this.idEquipaje = json.getString("idEquipaje");
+        this.precioCongelado = json.getDouble("precioCongelado"); // Recupera el precio
     }
-
-    public abstract double calcularCosto(Vuelo vuelo);
 
     /**
      * Convierte el objeto Equipaje a formato JSON.
+     * Guarda ID, Tipo y PRECIO.
      */
     public JSONObject toJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("idEquipaje", this.idEquipaje);
-
-        // Guarda el nombre simple de la clase (ej: "CarryOn", "EquipajeDeMano")
-        // Esto es vital para que el deserializador sepa qué clase crear.
-        jsonObject.put("tipoEquipaje", this.getClass().getSimpleName());
-
+        jsonObject.put("precioCongelado", this.precioCongelado); // Guarda el precio
+        jsonObject.put("tipoEquipaje", this.getClass().getSimpleName()); // Guarda el tipo
         return jsonObject;
     }
 
-    // --- Getter ---
+    // Nuevo método para obtener el precio (reemplaza a calcularCosto)
+    public double getCosto() {
+        return precioCongelado;
+    }
+
     public String getIdEquipaje() {
         return idEquipaje;
     }
 
-    // --- equals() y hashCode() basados en el ID ---
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,6 +64,6 @@ public abstract class Equipaje {
 
     @Override
     public String toString() {
-        return "[idEquipaje: " + idEquipaje + "]";
+        return "[" + this.getClass().getSimpleName() + " | $" + precioCongelado + "]";
     }
 }

@@ -6,45 +6,19 @@ import org.json.JSONObject;
 public class CarryOn extends Equipaje {
 
     /**
-     * Constructor para un nuevo CarryOn.
+     * Constructor. Recibe el precio calculado en ese momento.
      */
-    public CarryOn() {
-        super();
+    public CarryOn(double precio) {
+        super(precio);
     }
 
     /**
-     * Constructor para DESERIALIZAR desde JSON.
-     * Llama al constructor de la clase padre.
+     * Constructor JSON.
      */
     public CarryOn(JSONObject json) throws JSONException {
         super(json);
     }
 
-    /**
-     * Convierte el objeto CarryOn a formato JSON.
-     * Llama al metodo del padre (que guarda ID y "tipoEquipaje").
-     */
-    public JSONObject toJSON() throws JSONException {
-        JSONObject jsonObject = super.toJSON();
-        return jsonObject;
-    }
-
-    /**
-     * Calcula el costo del CarryOn.
-     * Primero, verifica si el Vuelo específico lo ofrece gratis.
-     * Si no es gratis, le pregunta el precio a la Aerolínea.
-     */
-    @Override
-    public double calcularCosto(Vuelo vuelo) {
-        if (vuelo.isCarryOnGratis()) {
-            return 0.0;
-        } else {
-            return vuelo.getAerolinea().getCostoCarryOn();
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "CarryOn[" + super.toString() + "]";
-    }
+    // ¡LISTO! No hace falta nada más.
+    // Usa el toJSON() y getCosto() de la clase padre Equipaje.
 }
