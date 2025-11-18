@@ -538,7 +538,7 @@ public class MenuCliente {
                 }
 
 
-                LocalDate nuevaFecha = pedirFecha("Nueva Fecha de Nacimiento");
+                LocalDate nuevaFecha = pedirFechaNacimiento("Nueva Fecha de Nacimiento");
                 if (nuevaFecha == null) return; // Canceló
 
                 // Llamamos al gestor
@@ -588,6 +588,19 @@ public class MenuCliente {
                 } else {
                     return fecha;
                 }
+            } catch (DateTimeParseException e) {
+                System.out.println("❌ Formato inválido.");
+            }
+        }
+    }
+
+    private LocalDate pedirFechaNacimiento(String mensaje) {
+        while (true) {
+            System.out.print(mensaje + " (AAAA-MM-DD) o '0' cancelar: ");
+            String input = scanner.nextLine().trim();
+            if (input.equals("0")) return null;
+            try {
+                return LocalDate.parse(input);
             } catch (DateTimeParseException e) {
                 System.out.println("❌ Formato inválido.");
             }
