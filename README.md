@@ -1,92 +1,35 @@
-# 💻 Proyecto Final Programación 2
+# AeroReserva ✈️
+![Java CI](https://img.shields.io/badge/Java-17-blue?logo=java&logoColor=white)
 
-Este documento describe cómo iniciar el trabajo y el flujo de desarrollo (Git Flow) que utilizaremos en el proyecto.
+AeroReserva es un proyecto académico de una plataforma de reserva de vuelos. Es una aplicación de consola construida en Java, enfocada en una arquitectura de 5 capas (Vistas, Servicios, Entidades, Persistencia, Main) y principios de POO.
 
----
-
-## 🚀 Inicio
-
-Sigue estos pasos para comenzar a trabajar en el proyecto:
-
-1.  **Clonar el repositorio:**
-    ```bash
-    git clone LINK_DEL_REPOSITORIO
-    cd proyecto-final
-    ```
-
-2.  **Cambiar a la rama de desarrollo:**
-    Asegúrate de trabajar siempre sobre la rama `develop`.
-    ```bash
-    git checkout develop
-    git pull origin develop
-    ```
-    ⚠️ **Importante:** Nunca trabajar directamente sobre la rama `main`.
+El sistema persiste los datos manualmente usando `org.json` y utiliza Inyección de Dependencias para gestionar los servicios (Gestores).
 
 ---
 
-## 🔁 Flujo de trabajo (Git Flow)
+## ✨ Características Principales
 
-Utilizamos un flujo de trabajo basado en tres tipos de ramas principales:
+### 👤 Para Clientes (Pasajeros)
+* **Gestión de Cuentas:** Registro (con validación de email/contraseña), Login y Perfil de Usuario (modificar datos, email y contraseña).
+* **Búsqueda Avanzada:** Soporta búsquedas de "Solo Ida" y "Ida y Vuelta".
+* **Lógica de Itinerarios:** El sistema genera automáticamente itinerarios, incluyendo **vuelos directos** y **vuelos con 1 escala**.
+* **Reservas Complejas:** Permite la selección de asientos de un mapa (`Map`) y agregado de múltiples piezas de equipaje por tipo.
+* **Precios Dinámicos:** El costo final se calcula basado en el precio base, la clase (`BUSINESS`/`ECONOMY`), si el `CarryOn` es gratis en ese vuelo, y las tarifas de equipaje específicas de la `Aerolinea`.
+* **Gestión de Reservas:** Permite ver, cancelar (reserva completa o un solo pasajero) y modificar reservas existentes (cambiar asiento, agregar equipaje, cambiar clase).
+* **Programa de Lealtad:** Acumulación de millas por cada compra.
 
-| Rama | Propósito |
-| :--- | :--- |
-| **`main`** | Versión **estable y final** del sistema. |
-| **`develop`** | Rama de **integración** (donde se unen todas las *features*). |
-| **`feature/nombre-de-la-tarea`** | Rama **temporal** de cada integrante para desarrollar una funcionalidad específica. |
-
-### 🌳 Crear una rama para tu tarea
-
-1.  Actualiza tu rama `develop`:
-    ```bash
-    git checkout develop
-    git pull origin develop
-    ```
-2.  Crea y cambia a tu nueva rama de *feature*:
-    ```bash
-    git checkout -b feature/nombre-de-la-tarea
-    ```
-
-### 📤 Subir cambios
-
-Una vez que hayas terminado tu trabajo, sube los cambios:
- ```bash
-git add .
-git commit -m "Agrego [nombre de la funcionalidad]" 
-git push origin feature/nombre-de-la-tarea
- ```
-
-
-## ➡️ Crear un Pull Request (PR)
-
-Una vez subidos tus cambios:
-
-1.  Desde la interfaz de **GitHub**, crea un **Pull Request (PR)** desde tu rama `feature/...` hacia la rama **`develop`**.
-2.  Un compañero o el responsable del proyecto revisará tu código (*code review*) antes de hacer el *merge*.
+### 🛠️ Para Administradores
+* **Gestión Maestra (ABMCL):** Control total de Alta, Baja, Modificación y Listado para `Aeropuertos`, `Aviones`, `Aerolineas`, `Vuelos` y `Usuarios`.
+* **Gestión de Flota:** Capacidad de crear `Aerolineas` (definiendo sus precios de equipaje) y asignar `Aviones` a sus flotas.
+* **Validación de Vuelos:** El sistema **impide** crear un vuelo si el `Avion` seleccionado no pertenece a la `flota` de la `Aerolinea` seleccionada.
+* **Protección de Datos:** El sistema **impide** modificar un `Vuelo` si este ya tiene reservas vendidas.
 
 ---
 
-## 📋 Project Board (Gestión de Tareas)
-
-Todas las tareas del proyecto se administran en el tablero de **GitHub Projects**:\
-
-### 🚥 Columnas del tablero:
-
-| Símbolo | Columna | Estado |
-| :---: | :--- | :--- |
-| 🟡 | **Pendiente / To do** | Tareas sin comenzar. |
-| 🔵 | **En progreso / In progress** | Tareas en desarrollo. |
-| 🟢 | **Finalizado / Done** | Tareas completadas o *mergeadas*. |
-
-⚙️ El tablero se actualiza **automáticamente** cuando se crean o cierran *issues* y *Pull Requests*.
+## 🛠️ Stack Tecnológico
+* **Lenguaje:** Java 17+
+* **Persistencia:** `org.json` (Serialización/Deserialización manual)
+* **Arquitectura:** Inyección de Dependencias (manual) y patrón `toJSON()` en entidades.
 
 ---
 
-## ✅ Buenas prácticas
-
-Mantén estas prácticas al trabajar con **Git**:
-
-* ✅ **Siempre** crear ramas desde **`develop`**.
-* ✅ Mensajes de *commit* **claros y en presente** (“Agrego”, “Corrijo”, “Refactorizo”, etc.).
-* ✅ No subir archivos innecesarios (`pycache`, `venv`, etc.).
-* ✅ Revisar el archivo **`.gitignore`** antes de hacer `git add .`.
-* ✅ Hacer `git pull` antes de empezar a trabajar cada día para asegurar tener la última versión de la rama.
