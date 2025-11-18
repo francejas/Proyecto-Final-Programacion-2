@@ -132,7 +132,7 @@ public class MenuPrincipal {
             } else { // Si es CLIENTE
                 // Crea e inyecta las dependencias al MenuCliente
                 MenuCliente menuCliente = new MenuCliente(usuario, scanner,
-                        gestorUsuarios, gestorVuelos, gestorReservas);
+                        gestorVuelos, gestorReservas, gestorUsuarios);
                 menuCliente.mostrar(); // Le pasa el control
             }
 
