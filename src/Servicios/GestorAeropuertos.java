@@ -14,7 +14,7 @@ import java.util.Set;
  * Esta clase carga los datos maestros "hardcodeados" desde el JSON al inicio.
  * NO implementa Gestionable y no permite al Admin modificar el inventario.
  * Su única responsabilidad es proveer métodos de consulta (lectura)
- * para los otros gestores y menús.
+ * para los otros gestores y menus.
  *
  * @version 2.0
  * @since 2025-11-05
