@@ -180,7 +180,7 @@ public class MenuCliente {
                 String nombre = scanner.nextLine();
                 System.out.print("   DNI: ");
                 String dni = scanner.nextLine();
-                LocalDate fecha = pedirFecha("   Fecha Nacimiento");
+                LocalDate fecha = pedirFechaNacimiento("   Fecha Nacimiento");
                 if (fecha == null) return null; // Cancelar
 
                 lista.add(new Pasajero(nombre, dni, fecha));
