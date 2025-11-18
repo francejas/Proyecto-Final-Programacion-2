@@ -1,11 +1,25 @@
 package Persistencia;
 
-import Entidades.*;
+
+import Entidades.Aeropuerto;
+import Entidades.Avion;
+import Entidades.Aerolinea;
+import Entidades.Usuario;
+import Entidades.Cliente;
+import Entidades.Administrador;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// ESTA CLASE ES TEMPORAL Y SE DEBE BORRAR ANTES DE ENTREGAR
+/**
+ * CLASE TEMPORAL para "sembrar" (seed) los archivos JSON con datos maestros.
+ * Se ejecuta UNA SOLA VEZ para crear los archivos.
+ * Luego debe ser eliminada o comentada.
+ *
+ * @version 2.0
+ * @since 2025-11-05
+ */
 public class PobladorDeDatos {
 
     public static void main(String[] args) {
@@ -13,10 +27,11 @@ public class PobladorDeDatos {
         System.out.println("--- INICIANDO POBLADO DE DATOS (SEEDING) ---");
 
         // --- 1. Crear los Gestores de JSON (Managers) ---
+
         JsonManagerAeropuertos jm_aeropuertos = new JsonManagerAeropuertos();
-        JsonManagerAviones jm_aviones = new JsonManagerAviones();
         JsonManagerAerolineas jm_aerolineas = new JsonManagerAerolineas();
         JsonManagerUsuarios jm_usuarios = new JsonManagerUsuarios();
+        // (Vuelos y Reservas se dejan vacíos para que los llene la app)
 
 
         // --- 2. Crear los Objetos en Java ---
@@ -138,104 +153,86 @@ public class PobladorDeDatos {
         System.out.println("Total de aeropuertos creados: " + aeropuertos.size());
 
         // ======================================================================
-        // AVIONES
+        // AEROLINEAS Y SU FLOTA (AVIONES)
+        // Los aviones se crean y asignan directamente a la flota
+        // ya que no se guardan en un archivo separado.
         // ======================================================================
-        System.out.println("Creando Aviones...");
-        List<Avion> aviones = new ArrayList<>();
-
-        // Definición de todos los aviones
-        Avion avion1_AR = new Avion("LV-FNI", "Airbus A330", 240, 24);
-        Avion avion2_AR = new Avion("LV-GKE", "Boeing 737-800", 150, 12);
-        Avion avion1_WJ = new Avion("LV-JYR", "Embraer 190", 90, 6); // Asignado a AR
-        Avion avion3_AR = new Avion("LV-HQB", "Airbus A330-200", 245, 24);
-        Avion avion4_AR = new Avion("LV-KFW", "Boeing 737-MAX 8", 160, 12);
-        Avion avion2_WJ = new Avion("LV-KJA", "Airbus A320", 186, 15);
-        Avion avion3_WJ = new Avion("LV-KJD", "Airbus A320neo", 186, 15);
-        Avion avion1_FO = new Avion("LV-KAY", "Boeing 737-800", 189, 15);
-        Avion avion2_FO = new Avion("LV-KEF", "Boeing 737-800", 189, 15);
-        Avion avion1_LD = new Avion("LV-CDA", "Fokker F28", 70, 8);
-        Avion avion2_LD = new Avion("LV-BZO", "Saab 340", 34, 4);
-        Avion avion1_AJ = new Avion("LV-JMQ", "Embraer ERJ-145", 50, 5);
-        Avion avion1_AN = new Avion("LV-CCU", "McDonnell Douglas MD-83", 165, 12);
-        Avion avion2_AN = new Avion("LV-WGN", "Boeing 737-800", 180, 15);
-        Avion avion1_HU = new Avion("LV-ZGT", "Let L-410 Turbolet", 19, 2);
-
-        // Agregar TODOS los aviones a la lista principal
-        aviones.add(avion1_AR);
-        aviones.add(avion2_AR);
-        aviones.add(avion1_WJ);
-        aviones.add(avion3_AR);
-        aviones.add(avion4_AR);
-        aviones.add(avion2_WJ);
-        aviones.add(avion3_WJ);
-        aviones.add(avion1_FO);
-        aviones.add(avion2_FO);
-        aviones.add(avion1_LD);
-        aviones.add(avion2_LD);
-        aviones.add(avion1_AJ);
-        aviones.add(avion1_AN);
-        aviones.add(avion2_AN);
-        aviones.add(avion1_HU);
-
-        System.out.println("Total de aviones creados: " + aviones.size());
-
-
-        // ======================================================================
-        // AEROLINEAS
-        // ======================================================================
-        System.out.println("Creando Aerolíneas...");
+        System.out.println("Creando Aerolíneas y asignando Aviones...");
         List<Aerolinea> aerolineas = new ArrayList<>();
 
-        // Definir y configurar cada aerolínea
+        // --- Aerolíneas Argentinas (AR) ---
         Aerolinea ar = new Aerolinea("AR", "Aerolíneas Argentinas", 50.0, 70.0, 150.0);
-        ar.agregarAvionAlaFlota(avion1_AR);
-        ar.agregarAvionAlaFlota(avion2_AR);
-        ar.agregarAvionAlaFlota(avion3_AR);
-        ar.agregarAvionAlaFlota(avion4_AR);
-        ar.agregarAvionAlaFlota(avion1_WJ);
-
-        Aerolinea wj = new Aerolinea("WJ", "JetSMART", 65.0, 80.0, 180.0);
-        wj.agregarAvionAlaFlota(avion2_WJ);
-        wj.agregarAvionAlaFlota(avion3_WJ);
-
-        Aerolinea fo = new Aerolinea("FO", "Flybondi", 60.0, 75.0, 175.0);
-        fo.agregarAvionAlaFlota(avion1_FO);
-        fo.agregarAvionAlaFlota(avion2_FO);
-
-        Aerolinea ld = new Aerolinea("LD", "LADE - Líneas Aéreas Del Estado", 70.0, 90.0, 200.0);
-        ld.agregarAvionAlaFlota(avion1_LD);
-        ld.agregarAvionAlaFlota(avion2_LD);
-
-        Aerolinea aj = new Aerolinea("AJ", "American Jet", 80.0, 100.0, 220.0);
-        aj.agregarAvionAlaFlota(avion1_AJ);
-
-        Aerolinea an = new Aerolinea("AN", "Andes Líneas Aéreas", 55.0, 70.0, 160.0);
-        an.agregarAvionAlaFlota(avion1_AN);
-        an.agregarAvionAlaFlota(avion2_AN);
-
-        Aerolinea hu = new Aerolinea("HU", "Humming Airways", 75.0, 85.0, 190.0);
-        hu.agregarAvionAlaFlota(avion1_HU);
-
-        // Agregar TODAS las aerolíneas a la lista principal
+        ar.agregarAvionAlaFlota(new Avion("LV-FNI", "Airbus A330", 240, 24));
+        ar.agregarAvionAlaFlota(new Avion("LV-GKE", "Boeing 737-800", 150, 12));
+        ar.agregarAvionAlaFlota(new Avion("LV-HQB", "Airbus A330-200", 245, 24));
+        ar.agregarAvionAlaFlota(new Avion("LV-KFW", "Boeing 737-MAX 8", 160, 12));
+        ar.agregarAvionAlaFlota(new Avion("LV-JYR", "Embraer 190", 90, 6));
         aerolineas.add(ar);
+
+        // --- JetSMART (WJ) ---
+        Aerolinea wj = new Aerolinea("WJ", "JetSMART", 65.0, 80.0, 180.0);
+        wj.agregarAvionAlaFlota(new Avion("LV-KJA", "Airbus A320", 186, 0)); // JetSMART suele ser solo Economy
+        wj.agregarAvionAlaFlota(new Avion("LV-KJD", "Airbus A320neo", 186, 0));
         aerolineas.add(wj);
+
+        // --- Flybondi (FO) ---
+        Aerolinea fo = new Aerolinea("FO", "Flybondi", 60.0, 75.0, 175.0);
+        fo.agregarAvionAlaFlota(new Avion("LV-KAY", "Boeing 737-800", 189, 0));
+        fo.agregarAvionAlaFlota(new Avion("LV-KEF", "Boeing 737-800", 189, 0));
         aerolineas.add(fo);
+
+        // --- LADE (LD) ---
+        Aerolinea ld = new Aerolinea("LD", "LADE - Líneas Aéreas Del Estado", 70.0, 90.0, 200.0);
+        ld.agregarAvionAlaFlota(new Avion("LV-CDA", "Fokker F28", 70, 8));
+        ld.agregarAvionAlaFlota(new Avion("LV-BZO", "Saab 340", 34, 4));
         aerolineas.add(ld);
+
+        // --- American Jet (AJ) ---
+        Aerolinea aj = new Aerolinea("AJ", "American Jet", 80.0, 100.0, 220.0);
+        aj.agregarAvionAlaFlota(new Avion("LV-JMQ", "Embraer ERJ-145", 50, 0));
         aerolineas.add(aj);
+
+        // --- Andes (AN) ---
+        Aerolinea an = new Aerolinea("AN", "Andes Líneas Aéreas", 55.0, 70.0, 160.0);
+        an.agregarAvionAlaFlota(new Avion("LV-CCU", "McDonnell Douglas MD-83", 165, 12));
+        an.agregarAvionAlaFlota(new Avion("LV-WGN", "Boeing 737-800", 180, 15));
         aerolineas.add(an);
+
+        // --- Humming (HU) ---
+        Aerolinea hu = new Aerolinea("HU", "Humming Airways", 75.0, 85.0, 190.0);
+        hu.agregarAvionAlaFlota(new Avion("LV-ZGT", "Let L-410 Turbolet", 19, 0));
         aerolineas.add(hu);
+        // ... (Agregar más aerolíneas si es necesario para llegar a 15)
 
         System.out.println("Total de aerolíneas creadas: " + aerolineas.size());
+
+        // ======================================================================
+        // USUARIOS (¡ESENCIAL PARA EL LOGIN!)
+        // ======================================================================
+        System.out.println("Creando Usuarios...");
+        List<Usuario> usuarios = new ArrayList<>();
+
+        // El ID se genera automáticamente en el constructor de Usuario
+        // admin
+        usuarios.add(new Administrador("Admin Principal", "admin@aeropro.com", "AdminPass1!", true));
+        // usuarios
+        usuarios.add(new Cliente("Juan Perez", "juan@mail.com", "JuanPass1!", true, 500, "25111222", LocalDate.parse("1980-05-15")));
+        usuarios.add(new Cliente("Maria Garcia", "maria@mail.com", "MariaPass1!", true, 1200, "30333444", LocalDate.parse("1990-10-20")));
+        usuarios.add(new Cliente("Carlos Lopez", "carlos@mail.com", "CarlosPass1!", true, 0, "32555666", LocalDate.parse("1995-02-10")));
+        usuarios.add(new Cliente("Ana Martinez", "ana@mail.com", "AnaPass1!", true, 200, "28777888", LocalDate.parse("1985-11-30")));
+        // ... (Agregar más usuarios para llegar a 15)
+
+        System.out.println("Total de usuarios creados: " + usuarios.size());
 
 
         // --- 3. Guardar todo en los archivos ---
         System.out.println("Guardando archivos JSON...");
-        jm_aeropuertos.guardarLista(aeropuertos);
-        jm_aviones.guardarLista(aviones);
-        jm_aerolineas.guardarLista(aerolineas);
-        // Aún no se crean usuarios en este poblador
+        jm_aeropuertos.guardarLista(aeropuertos); // Guarda aeropuertos.json
+        jm_aerolineas.guardarLista(aerolineas); // Guarda aerolineas.json (CON los aviones anidados)
+        jm_usuarios.guardarLista(usuarios);     // Guarda usuarios.json
+
 
         System.out.println("--- ¡POBLADO DE DATOS COMPLETADO! ---");
-        System.out.println("--- Ahora podés BORRAR esta clase (PobladorDeDatos.java) ---");
+        System.out.println("--- Ahora podés BORRAR o comentar el main de esta clase ---");
     }
 }
