@@ -39,4 +39,4 @@ public class EquipajeEspecial extends Equipaje {
         return "EquipajeEspecial[" + super.toString() + "]";
     }
 }
-}
+
