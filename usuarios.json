@@ -50,5 +50,16 @@
         "rol": "CLIENTE",
         "DNI": "28777888",
         "activo": true
+    },
+    {
+        "fechaDeNacimiento": "1999-01-01",
+        "password": "LucasPass1!",
+        "millas": 15,
+        "id": 6,
+        "nombre": "Lucas",
+        "email": "lucas@mail.com",
+        "rol": "CLIENTE",
+        "DNI": "40444444",
+        "activo": true
     }
 ]
