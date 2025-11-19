@@ -1,6 +1,5 @@
 package main;
 
-// Importa todos los servicios (Gestores)
 import Servicios.GestorAerolineas;
 import Servicios.GestorAeropuertos;
 import Servicios.GestorReservas;
@@ -21,7 +20,7 @@ import java.util.Scanner;
  */
 public class Aplicacion {
 
-    // --- Atributos (El estado de la aplicación) ---
+    // --- Atributos  ---
     // Son 'final' porque se instancian UNA VEZ y nunca cambian.
 
     // Gestores de "Solo Lectura" (Inventario)
@@ -63,8 +62,7 @@ public class Aplicacion {
         // GestorReservas necesita a Usuarios (para millas/re-linkeo) y Vuelos (para asientos)
         this.gestorReservas = new GestorReservas(this.gestorUsuarios, this.gestorVuelos);
 
-        // (Nota: GestorAviones fue eliminado, ya que los aviones se cargan
-        //  directamente desde GestorAerolineas)
+
     }
 
     /**

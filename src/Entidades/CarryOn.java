@@ -19,6 +19,4 @@ public class CarryOn extends Equipaje {
         super(json);
     }
 
-    // ¡LISTO! No hace falta nada más.
-    // Usa el toJSON() y getCosto() de la clase padre Equipaje.
 }

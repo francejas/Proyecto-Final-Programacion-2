@@ -79,7 +79,6 @@ public class GestorReservas {
             r.setCliente(clienteDeLaReserva);
 
             // Poblar el historial del cliente
-            // Esto hace que cliente.getHistorialDeReservas() funcione on-demand
             if (clienteDeLaReserva != null && r.isActiva()) {
                 clienteDeLaReserva.getHistorialDeReservas().add(r);
             }
@@ -299,10 +298,6 @@ public class GestorReservas {
             throw new DatoInvalidoException("El pasaje ya es de clase " + nuevaClase);
         }
 
-        // (Validación de disponibilidad - simplificada)
-        // Se asume que el usuario tendrá que cambiar su asiento manualmente después,
-        // ya que este metodo solo cambia la tarifa y el tipo.
-        // Una lógica más compleja buscaría un asiento libre en la nueva cabina.
 
         // 1. Cambiar la clase
         pasaje.setClase(nuevaClase);

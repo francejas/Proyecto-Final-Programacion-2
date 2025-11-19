@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
+
 
 public class MenuPrincipal {
 
@@ -60,8 +60,7 @@ public class MenuPrincipal {
     private void ejecutarLogin() {
         System.out.println("\n--- INICIAR SESIÓN ---");
 
-        // Usamos el helper para validar formato (opcional en login, pero bueno)
-        // O pedimos directo si preferís ser laxo en el login
+
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
@@ -79,7 +78,7 @@ public class MenuPrincipal {
                 menuAdmin.mostrar();
             } else {
                 MenuCliente menuCliente = new MenuCliente(usuario, scanner,
-                        gestorVuelos, gestorReservas, gestorUsuarios, gestorAeropuertos); // Agregué gestorAeropuertos
+                        gestorVuelos, gestorReservas, gestorUsuarios, gestorAeropuertos);
                 menuCliente.mostrar();
             }
 
@@ -133,7 +132,7 @@ public class MenuPrincipal {
             if (email.equals("0")) return null;
 
             boolean tieneArroba = email.contains("@");
-            boolean tienePunto = email.contains("."); // Simplificado, idealmente .com, .net, etc.
+            boolean tienePunto = email.contains(".");
 
             if (!tieneArroba) {
                 System.out.println("   ❌ Formato inválido: Falta el '@'.");
@@ -142,7 +141,7 @@ public class MenuPrincipal {
             } else if (email.contains(" ")) {
                 System.out.println("   ❌ Formato inválido: No puede tener espacios.");
             } else {
-                return email; // ¡Válido!
+                return email;
             }
         }
     }

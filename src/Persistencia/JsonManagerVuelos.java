@@ -52,7 +52,7 @@ public class JsonManagerVuelos {
             e.printStackTrace();
             return new ArrayList<>();
         } catch (RuntimeException e) {
-            // (Opcional) Un catch genérico por si otra cosa falla
+            //  Un catch genérico por si otra cosa falla
             System.err.println("Error inesperado al leer la lista de vuelos: " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
