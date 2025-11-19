@@ -9,7 +9,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -142,7 +141,7 @@ public class MenuCliente {
             Itinerario it = itinerarios.get(i);
             Duration duracion = it.getDuracionTotal();
 
-            // Imprimir bonito sin toString
+
             System.out.println("------------------------------------------------");
             System.out.println((i + 1) + ". 🛫 " + it.getOrigenFinal().getCodigoIATA() + " ➔ 🛬 " + it.getDestinoFinal().getCodigoIATA());
             System.out.println("    Aerolínea: " + it.getSegmentos().get(0).getAerolinea().getNombre());
@@ -229,19 +228,71 @@ public class MenuCliente {
     }
 
     private String elegirAsiento(Vuelo vuelo) {
-        // Aquí idealmente mostrarías un mapa visual.
-        System.out.println("      (Asientos libres: A-F. Ej: 1A, 2B, 15F)");
+        // 1. Mostrar el mapa visual antes de pedir el input
+        imprimirMapaDeAsientos(vuelo);
+
+        // 2. Bucle de selección
         while (true) {
             System.out.print("      Ingrese Asiento (o '0' para cancelar): ");
             String asiento = scanner.nextLine().toUpperCase().trim();
+
             if (asiento.equals("0")) return null;
 
             if (vuelo.isAsientoLibre(asiento)) {
+                // Ocupamos el asiento inmediatamente en el vuelo maestro para evitar errores
+                vuelo.ocuparAsiento(asiento);
                 return asiento;
             } else {
-                System.out.println("      ❌ Asiento ocupado o inexistente. Pruebe otro.");
+                System.out.println("      ❌ Asiento ocupado o inexistente. Pruebe otro o ingrese '0'.");
             }
         }
+    }
+
+    /**
+     * Genera una representación en caracteres del mapa de asientos del vuelo.
+     * Muestra [ ] para asientos libres y [O] para ocupados.
+     */
+    private void imprimirMapaDeAsientos(Vuelo vuelo) {
+        // Obtenemos el mapa de disponibilidad del vuelo
+        java.util.Map<String, Boolean> asientos = vuelo.getAsientosDisponibles();
+        char[] columnas = {'A', 'B', 'C', 'D', 'E', 'F'};
+        int maxFila = 0;
+
+        // 1. Encontrar la fila máxima para el bucle (necesario para saber hasta dónde iterar)
+        for (String codigo : asientos.keySet()) {
+            try {
+                //  el formato es siempre [Número][Letra]
+                int fila = Integer.parseInt(codigo.substring(0, codigo.length() - 1));
+                if (fila > maxFila) maxFila = fila;
+            } catch (NumberFormatException e) {
+                // Ignorar asientos mal formateados si los hay
+            }
+        }
+
+        System.out.println("\n        --- MAPA DE ASIENTOS DEL AVIÓN ---");
+        System.out.println("        [O]: Ocupado | [ ]: Libre");
+        System.out.printf("        %-5s %-4s %-4s %-4s %-4s %-4s %-4s%n", "FILA", "A", "B", "C", "D", "E", "F");
+        System.out.println("        -----------------------------------------");
+
+        // 2. Imprimir fila por fila
+        for (int fila = 1; fila <= maxFila; fila++) {
+            System.out.printf("        %-5d", fila); // Imprimir Número de fila
+
+            for (char col : columnas) {
+                String codigo = fila + "" + col;
+
+                if (asientos.containsKey(codigo)) {
+                    // Si la clave existe, verificamos el estado (true = Libre -> [ ], false = Ocupado -> [O])
+                    String estado = asientos.get(codigo) ? "[ ]" : "[O]";
+                    System.out.printf(" %-3s", estado);
+                } else {
+                    // Si la clave no existe (ej. no hay fila F en cabina ejecutiva), imprimimos vacío
+                    System.out.printf(" %-3s", " - ");
+                }
+            }
+            System.out.println(); // Nueva línea para la siguiente fila
+        }
+        System.out.println("        -----------------------------------------");
     }
 
     private void agregarEquipajeAPasaje(Pasaje pasaje, Vuelo vuelo) {

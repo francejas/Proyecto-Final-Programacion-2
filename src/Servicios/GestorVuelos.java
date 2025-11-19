@@ -11,7 +11,6 @@ import Persistencia.JsonManagerVuelos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -167,8 +166,6 @@ public class GestorVuelos implements Gestionable<Vuelo, String> {
             throw new DatoInvalidoException("La fecha de llegada no puede ser anterior a la de salida.");
         }
 
-        // (En un sistema más complejo, se validaría que el avión no esté
-        // usado por otro vuelo en el mismo horario)
 
         this.vuelos.add(vuelo);
         guardarEnJson();
@@ -191,11 +188,7 @@ public class GestorVuelos implements Gestionable<Vuelo, String> {
         }
     }
 
-    /**
-     * Modifica un vuelo existente.
-     * Esta implementación asume que el MenuAdmin ya validó
-     * que el vuelo no tenga reservas.
-     */
+
     @Override
     public void modificacion(Vuelo vueloModificado) throws DatoInvalidoException {
         // 1) Buscar vuelo original

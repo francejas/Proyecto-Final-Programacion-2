@@ -98,7 +98,7 @@ public class GestorAerolineas {
             // Persiste los cambios
             guardarEnJson();
         }
-        // (En un sistema más robusto, se lanzaría una excepción si la aerolínea es null)
+
     }
 
     // --- Métodos de Consulta (Solo Lectura) ---

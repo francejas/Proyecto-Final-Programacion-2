@@ -48,7 +48,7 @@ public class MenuAdmin {
 
             try {
                 int opcion = scanner.nextInt();
-                scanner.nextLine(); // Limpiar buffer
+                scanner.nextLine();
 
                 switch (opcion) {
                     case 1: flujoGestionarVuelos(); break;
@@ -237,7 +237,7 @@ public class MenuAdmin {
             System.out.println("\n--- GESTIÓN DE USUARIOS ---");
             System.out.println("1. Listar Usuarios");
             System.out.println("2. Dar de Baja (Desactivar)");
-            System.out.println("3. Dar de Alta (Reactivar)"); // Opción Nueva
+            System.out.println("3. Dar de Alta (Reactivar)");
             System.out.println("4. Volver");
             System.out.print("Opción: ");
 
@@ -344,7 +344,7 @@ public class MenuAdmin {
     }
 
     // ========================================================================
-    // 3. GESTIÓN DE AEROLÍNEAS (CORREGIDO)
+    // 3. GESTIÓN DE AEROLÍNEAS
     // ========================================================================
 
     private void flujoGestionarAerolineas() {
@@ -365,25 +365,25 @@ public class MenuAdmin {
                         listarAerolineasSimple();
                         System.out.println("Presione Enter..."); scanner.nextLine();
                         break;
-                    case 2: // ACTIVAR
+                    case 2:
                         listarAerolineasSimple();
-                        // Usamos el nuevo helper robusto
+
                         Aerolinea aActivar = pedirCodigoAerolineaRobusto("ACTIVAR");
                         if (aActivar != null) {
                             gestorAerolineas.activarAerolinea(aActivar.getCodigo());
                             System.out.println("✅ Aerolínea activada.");
                         }
                         break;
-                    case 3: // DESACTIVAR
+                    case 3:
                         listarAerolineasSimple();
-                        // Usamos el nuevo helper robusto
+
                         Aerolinea aDesactivar = pedirCodigoAerolineaRobusto("DESACTIVAR");
                         if (aDesactivar != null) {
                             gestorAerolineas.desactivarAerolinea(aDesactivar.getCodigo());
                             System.out.println("✅ Aerolínea desactivada.");
                         }
                         break;
-                    case 4: // MODIFICAR PRECIOS
+                    case 4:
                         listarAerolineasSimple();
                         modificarPreciosAerolinea();
                         break;
@@ -406,7 +406,7 @@ public class MenuAdmin {
     }
 
     private void modificarPreciosAerolinea() {
-        // Usamos el nuevo helper robusto
+
         Aerolinea a = pedirCodigoAerolineaRobusto("MODIFICAR PRECIOS");
         if (a == null) return; // Canceló
 

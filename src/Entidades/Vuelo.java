@@ -56,7 +56,7 @@ public class Vuelo {
      */
     public Vuelo(JSONObject json) throws JSONException {
         this.idVuelo = json.getString("idVuelo");
-        // Asume que las clases Aeropuerto, Aerolinea y Avion tienen constructor JSON
+
         this.origen = new Aeropuerto(json.getJSONObject("origen"));
         this.destino = new Aeropuerto(json.getJSONObject("destino"));
         this.fechaHoraSalida = LocalDateTime.parse(json.getString("fechaHoraSalida"));
@@ -83,7 +83,7 @@ public class Vuelo {
     public JSONObject toJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("idVuelo", this.idVuelo);
-        // Asume que las clases Aeropuerto, Aerolinea y Avion tienen metodo toJSON
+
         jsonObject.put("origen", this.origen.toJSON());
         jsonObject.put("destino", this.destino.toJSON());
         jsonObject.put("fechaHoraSalida", this.fechaHoraSalida.toString());
