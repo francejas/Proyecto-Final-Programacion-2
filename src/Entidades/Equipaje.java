@@ -9,7 +9,7 @@ import java.util.UUID;
 public abstract class Equipaje {
 
     private final String idEquipaje;
-    private final double precioCongelado; // ¡Nuevo!
+    private final double precioCongelado;
 
     /**
      * Constructor para un nuevo equipaje.
@@ -40,7 +40,7 @@ public abstract class Equipaje {
         return jsonObject;
     }
 
-    // Nuevo método para obtener el precio (reemplaza a calcularCosto)
+
     public double getCosto() {
         return precioCongelado;
     }

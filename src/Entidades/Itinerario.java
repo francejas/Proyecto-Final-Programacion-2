@@ -39,7 +39,7 @@ public class Itinerario {
         JSONArray jsonSegmentos = json.getJSONArray("segmentos");
         for (int i = 0; i < jsonSegmentos.length(); i++) {
             JSONObject jsonVuelo = jsonSegmentos.getJSONObject(i);
-            // Asume que la clase Vuelo tiene un constructor JSON
+
             this.segmentos.add(new Vuelo(jsonVuelo));
         }
     }
@@ -54,7 +54,7 @@ public class Itinerario {
         // Serializar la lista de segmentos (vuelos)
         JSONArray jsonSegmentos = new JSONArray();
         for (Vuelo vuelo : this.segmentos) {
-            // Asume que la clase Vuelo tiene un metodo toJSON
+
             jsonSegmentos.put(vuelo.toJSON());
         }
         jsonObject.put("segmentos", jsonSegmentos);

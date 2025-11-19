@@ -1,6 +1,6 @@
 package Persistencia;
 
-// Importa todas las entidades y los managers necesarios
+
 import Entidades.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

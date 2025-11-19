@@ -63,7 +63,7 @@ public class Reserva {
         this.itinerarios = new ArrayList<>();
         JSONArray jsonItinerarios = json.getJSONArray("itinerarios");
         for (int i = 0; i < jsonItinerarios.length(); i++) {
-            // Asume que Itinerario.java tiene un constructor (JSONObject)
+
             this.itinerarios.add(new Itinerario(jsonItinerarios.getJSONObject(i)));
         }
 
@@ -71,14 +71,13 @@ public class Reserva {
         this.pasajes = new ArrayList<>();
         JSONArray jsonPasajes = json.getJSONArray("pasajes");
         for (int i = 0; i < jsonPasajes.length(); i++) {
-            // Asume que Pasaje.java tiene un constructor (JSONObject)
+
             this.pasajes.add(new Pasaje(jsonPasajes.getJSONObject(i)));
         }
     }
 
     /**
      * Convierte el objeto Reserva a formato JSON.
-     * Serializa recursivamente sus listas.
      */
     public JSONObject toJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -87,7 +86,7 @@ public class Reserva {
         // Para evitar referencias circulares (Cliente -> Reserva -> Cliente),
         // guardamos solo el ID del cliente.
         if (this.cliente != null) {
-            // Asume que Cliente.java tiene un metodo getId() que devuelve int
+
             jsonObject.put("clienteId", this.cliente.getId());
         }
 
@@ -99,7 +98,7 @@ public class Reserva {
         // Serializar lista de Itinerarios
         JSONArray jsonItinerarios = new JSONArray();
         for (Itinerario itinerario : this.itinerarios) {
-            // Asume que Itinerario.java tiene un metodo toJSON()
+
             jsonItinerarios.put(itinerario.toJSON());
         }
         jsonObject.put("itinerarios", jsonItinerarios);
@@ -107,7 +106,7 @@ public class Reserva {
         // Serializar lista de Pasajes
         JSONArray jsonPasajes = new JSONArray();
         for (Pasaje pasaje : this.pasajes) {
-            // Asume que Pasaje.java tiene un método toJSON()
+
             jsonPasajes.put(pasaje.toJSON());
         }
         jsonObject.put("pasajes", jsonPasajes);

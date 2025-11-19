@@ -52,7 +52,7 @@ public class Aerolinea {
 
     /**
      * Constructor para DESERIALIZAR desde JSON.
-     * Lee el atributo 'activa' (debe existir).
+     * Lee el atributo 'activa'.
      */
     public Aerolinea(JSONObject json) throws JSONException {
         this.codigo = json.getString("codigo");
@@ -61,11 +61,6 @@ public class Aerolinea {
         this.costoEquipajeDespachado = json.getDouble("costoEquipajeDespachado");
         this.costoEquipajeEspecial = json.getDouble("costoEquipajeEspecial");
 
-        /**
-         * Ahora usamos getBoolean(). Si el campo "activa"
-         * falta en el JSON, esto lanzará una JSONException,
-         * lo cual es correcto porque el formato sería inválido.
-         */
         this.activa = json.getBoolean("activa");
 
         // Deserializar la lista de aviones
@@ -73,7 +68,7 @@ public class Aerolinea {
         JSONArray jsonFlota = json.getJSONArray("flotaDeAviones");
         for (int i = 0; i < jsonFlota.length(); i++) {
             JSONObject jsonAvion = jsonFlota.getJSONObject(i);
-            // Asume que la clase Avion también tiene un constructor JSON
+
             this.flotaDeAviones.add(new Avion(jsonAvion));
         }
     }
@@ -98,7 +93,7 @@ public class Aerolinea {
         // Serializar la lista de aviones
         JSONArray jsonFlota = new JSONArray();
         for (Avion avion : this.flotaDeAviones) {
-            // Asume que la clase Avion tambien tiene un metodo JSON
+
             jsonFlota.put(avion.toJSON());
         }
         jsonObject.put("flotaDeAviones", jsonFlota);

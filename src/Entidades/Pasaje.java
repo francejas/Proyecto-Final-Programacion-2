@@ -93,7 +93,7 @@ public class Pasaje {
         double costoEquipaje = 0.0;
         if (this.equipajeContratado != null) {
             for (Equipaje equipaje : this.equipajeContratado) {
-                // Usamos getCosto(), que devuelve el precio histórico guardado
+                // getCosto() devuelve el precio histórico guardado
                 costoEquipaje += equipaje.getCosto();
             }
         }
