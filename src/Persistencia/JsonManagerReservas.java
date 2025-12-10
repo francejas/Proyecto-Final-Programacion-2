@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonManagerReservas {
-    private final String nombreArchivo = "reservas.json";
+    private final String nombreArchivo = "Datos/reservas.json";
 
-    public JsonManagerReservas() {}
+    public JsonManagerReservas() {
+    }
 
-    public void guardarLista(List<Reserva> listaReserva){
+    public void guardarLista(List<Reserva> listaReserva) {
         try {
             JSONArray jsonArray = serializarLista(listaReserva);
             OperacionesLectoEscritura.grabar(nombreArchivo, jsonArray);
@@ -23,15 +24,15 @@ public class JsonManagerReservas {
         }
     }
 
-    public JSONArray serializarLista(List<Reserva> listaReserva){
-        try{
+    public JSONArray serializarLista(List<Reserva> listaReserva) {
+        try {
             JSONArray jsonArray = new JSONArray();
-            for(Reserva r : listaReserva){
+            for (Reserva r : listaReserva) {
                 jsonArray.put(r.toJSON());
             }
             return jsonArray;
-        }catch(JSONException e){
-            throw new RuntimeException("No se ha podido serializar la lista de reservas. ",e);
+        } catch (JSONException e) {
+            throw new RuntimeException("No se ha podido serializar la lista de reservas. ", e);
         }
     }
 
@@ -58,14 +59,13 @@ public class JsonManagerReservas {
         }
     }
 
-
     public List<Reserva> deserializarLista(JSONArray jsonArray) throws JSONException {
         List<Reserva> listaReserva = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             // Llama al constructor JSON, que puede lanzar JSONException
             Reserva r = new Reserva(jsonArray.getJSONObject(i));
             listaReserva.add(r);
         }
-        return  listaReserva;
+        return listaReserva;
     }
 }

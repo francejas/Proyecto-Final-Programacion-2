@@ -11,7 +11,7 @@ import java.util.List;
 
 public class JsonManagerAerolineas {
 
-    private final String nombreArchivo = "aerolineas.json";
+    private final String nombreArchivo = "Datos/aerolineas.json";
 
     public JsonManagerAerolineas() {
     }
@@ -72,7 +72,6 @@ public class JsonManagerAerolineas {
             return new ArrayList<>();
         }
     }
-
 
     private List<Aerolinea> deserializarLista(JSONArray jsonArray) throws JSONException {
         List<Aerolinea> listaAerolineas = new ArrayList<>();
