@@ -23,7 +23,7 @@ public class MenuCliente {
     private GestorAeropuertos gestorAeropuertos; // Necesario para validaciones o info extra
 
     public MenuCliente(Usuario usuario, Scanner scanner, GestorVuelos gv,
-                       GestorReservas gr, GestorUsuarios gu, GestorAeropuertos gap) {
+            GestorReservas gr, GestorUsuarios gu, GestorAeropuertos gap) {
         this.clienteLogueado = usuario;
         this.scanner = scanner;
         this.gestorVuelos = gv;
@@ -48,11 +48,21 @@ public class MenuCliente {
             int opcion = pedirIntRango("Seleccione una opción", 1, 5);
 
             switch (opcion) {
-                case 1: flujoBuscarVuelo(); break;
-                case 2: flujoMisReservas(); break;
-                case 3: flujoMiPerfil(); break;
-                case 4: consultarMillas(); break;
-                case 5: salir = true; break;
+                case 1:
+                    flujoBuscarVuelo();
+                    break;
+                case 2:
+                    flujoMisReservas();
+                    break;
+                case 3:
+                    flujoMiPerfil();
+                    break;
+                case 4:
+                    consultarMillas();
+                    break;
+                case 5:
+                    salir = true;
+                    break;
             }
         }
     }
@@ -68,20 +78,24 @@ public class MenuCliente {
         System.out.println("0. Volver");
 
         int tipoViaje = pedirIntRango("Opción", 0, 2);
-        if (tipoViaje == 0) return;
+        if (tipoViaje == 0)
+            return;
 
         try {
             // 1. Pedir datos de búsqueda (Admite ciudad o código)
             System.out.print("Origen (Ciudad o Código, ej: 'Buenos Aires'): ");
             String origen = scanner.nextLine().trim();
-            if (origen.equals("0")) return;
+            if (origen.equals("0"))
+                return;
 
             System.out.print("Destino (Ciudad o Código, ej: 'Miami'): ");
             String destino = scanner.nextLine().trim();
-            if (destino.equals("0")) return;
+            if (destino.equals("0"))
+                return;
 
             LocalDate fechaIda = pedirFecha("Fecha Ida");
-            if (fechaIda == null) return;
+            if (fechaIda == null)
+                return;
 
             System.out.println("\n⏳ Buscando mejores opciones...");
 
@@ -90,39 +104,46 @@ public class MenuCliente {
 
             // Selección de Ida
             Itinerario itinerarioIda = seleccionarItinerario(resultadosIda);
-            if (itinerarioIda == null) return; // Usuario canceló la selección
+            if (itinerarioIda == null)
+                return; // Usuario canceló la selección
 
             // 2. Buscar Vuelta (si corresponde)
             Itinerario itinerarioVuelta = null;
             if (tipoViaje == 2) {
                 LocalDate fechaVuelta = pedirFecha("Fecha Vuelta");
-                if (fechaVuelta == null) return;
+                if (fechaVuelta == null)
+                    return;
 
                 // Validación: Vuelta no puede ser antes que Ida
                 while (fechaVuelta.isBefore(fechaIda)) {
                     System.out.println("❌ La fecha de vuelta no puede ser anterior a la ida.");
                     fechaVuelta = pedirFecha("Fecha Vuelta");
-                    if (fechaVuelta == null) return;
+                    if (fechaVuelta == null)
+                        return;
                 }
 
                 System.out.println("\n⏳ Buscando opciones de VUELTA...");
                 // Invertimos origen y destino para la vuelta
                 List<Itinerario> resultadosVuelta = gestorVuelos.buscarItinerarios(destino, origen, fechaVuelta);
                 itinerarioVuelta = seleccionarItinerario(resultadosVuelta);
-                if (itinerarioVuelta == null) return;
+                if (itinerarioVuelta == null)
+                    return;
             }
 
             // 3. Cargar Pasajeros (Autocompletado Inteligente)
             List<Pasajero> pasajeros = cargarDatosPasajeros();
-            if (pasajeros == null) return;
+            if (pasajeros == null)
+                return;
 
             // 4. Configurar Reserva (Asientos y Equipaje)
             List<Itinerario> itinerariosReserva = new ArrayList<>();
             itinerariosReserva.add(itinerarioIda);
-            if (itinerarioVuelta != null) itinerariosReserva.add(itinerarioVuelta);
+            if (itinerarioVuelta != null)
+                itinerariosReserva.add(itinerarioVuelta);
 
             List<Pasaje> todosLosPasajes = configurarDetallesViaje(itinerariosReserva, pasajeros);
-            if (todosLosPasajes == null) return; // Cancelación durante la configuración
+            if (todosLosPasajes == null)
+                return; // Cancelación durante la configuración
 
             // 5. Confirmación Final y Pago
             confirmarYCrearReserva(itinerariosReserva, todosLosPasajes);
@@ -141,9 +162,9 @@ public class MenuCliente {
             Itinerario it = itinerarios.get(i);
             Duration duracion = it.getDuracionTotal();
 
-
             System.out.println("------------------------------------------------");
-            System.out.println((i + 1) + ". 🛫 " + it.getOrigenFinal().getCodigoIATA() + " ➔ 🛬 " + it.getDestinoFinal().getCodigoIATA());
+            System.out.println((i + 1) + ". 🛫 " + it.getOrigenFinal().getCodigoIATA() + " ➔ 🛬 "
+                    + it.getDestinoFinal().getCodigoIATA());
             System.out.println("    Aerolínea: " + it.getSegmentos().get(0).getAerolinea().getNombre());
             System.out.println("    Escalas: " + (it.getCantidadEscalas() == 0 ? "Directo" : it.getCantidadEscalas()));
             System.out.println("    Duración: " + duracion.toHours() + "h " + (duracion.toMinutes() % 60) + "m");
@@ -152,7 +173,8 @@ public class MenuCliente {
         System.out.println("------------------------------------------------");
 
         int op = pedirIntRango("Seleccione un vuelo (0 para cancelar)", 0, itinerarios.size());
-        if (op == 0) return null;
+        if (op == 0)
+            return null;
         return itinerarios.get(op - 1);
     }
 
@@ -180,7 +202,8 @@ public class MenuCliente {
                 System.out.print("   DNI: ");
                 String dni = scanner.nextLine();
                 LocalDate fecha = pedirFechaNacimiento("   Fecha Nacimiento");
-                if (fecha == null) return null; // Cancelar
+                if (fecha == null)
+                    return null; // Cancelar
 
                 lista.add(new Pasajero(nombre, dni, fecha));
             }
@@ -209,11 +232,17 @@ public class MenuCliente {
                     System.out.println("      1. Economy ($" + vuelo.getPrecioBase() + ")");
                     System.out.println("      2. Business ($" + (vuelo.getPrecioBase() * 1.8) + ")");
                     int opClase = pedirIntRango("      Opción", 1, 2);
-                    TipoClase clase = (opClase == 2) ? TipoClase.BUSINESS : TipoClase.ECONOMY;
+                    TipoClase clase;
+                    if (opClase == 2) {
+                        clase = TipoClase.BUSINESS;
+                    } else {
+                        clase = TipoClase.ECONOMY;
+                    }
 
                     // 2. Asiento
                     String asiento = elegirAsiento(vuelo);
-                    if (asiento == null) return null; // Cancelar todo
+                    if (asiento == null)
+                        return null; // Cancelar todo
 
                     Pasaje pasaje = new Pasaje(pax, vuelo, asiento, clase);
 
@@ -236,7 +265,8 @@ public class MenuCliente {
             System.out.print("      Ingrese Asiento (o '0' para cancelar): ");
             String asiento = scanner.nextLine().toUpperCase().trim();
 
-            if (asiento.equals("0")) return null;
+            if (asiento.equals("0"))
+                return null;
 
             if (vuelo.isAsientoLibre(asiento)) {
                 // Ocupamos el asiento inmediatamente en el vuelo maestro para evitar errores
@@ -255,15 +285,17 @@ public class MenuCliente {
     private void imprimirMapaDeAsientos(Vuelo vuelo) {
         // Obtenemos el mapa de disponibilidad del vuelo
         java.util.Map<String, Boolean> asientos = vuelo.getAsientosDisponibles();
-        char[] columnas = {'A', 'B', 'C', 'D', 'E', 'F'};
+        char[] columnas = { 'A', 'B', 'C', 'D', 'E', 'F' };
         int maxFila = 0;
 
-        // 1. Encontrar la fila máxima para el bucle (necesario para saber hasta dónde iterar)
+        // 1. Encontrar la fila máxima para el bucle (necesario para saber hasta dónde
+        // iterar)
         for (String codigo : asientos.keySet()) {
             try {
-                //  el formato es siempre [Número][Letra]
+                // el formato es siempre [Número][Letra]
                 int fila = Integer.parseInt(codigo.substring(0, codigo.length() - 1));
-                if (fila > maxFila) maxFila = fila;
+                if (fila > maxFila)
+                    maxFila = fila;
             } catch (NumberFormatException e) {
                 // Ignorar asientos mal formateados si los hay
             }
@@ -282,11 +314,13 @@ public class MenuCliente {
                 String codigo = fila + "" + col;
 
                 if (asientos.containsKey(codigo)) {
-                    // Si la clave existe, verificamos el estado (true = Libre -> [ ], false = Ocupado -> [O])
+                    // Si la clave existe, verificamos el estado (true = Libre -> [ ], false =
+                    // Ocupado -> [O])
                     String estado = asientos.get(codigo) ? "[ ]" : "[O]";
                     System.out.printf(" %-3s", estado);
                 } else {
-                    // Si la clave no existe (ej. no hay fila F en cabina ejecutiva), imprimimos vacío
+                    // Si la clave no existe (ej. no hay fila F en cabina ejecutiva), imprimimos
+                    // vacío
                     System.out.printf(" %-3s", " - ");
                 }
             }
@@ -382,7 +416,8 @@ public class MenuCliente {
         for (Reserva r : misReservas) {
             Itinerario ida = r.getItinerarios().get(0);
             String ruta = ida.getOrigenFinal().getCodigoIATA() + " -> " + ida.getDestinoFinal().getCodigoIATA();
-            if (r.getItinerarios().size() > 1) ruta += " (I/V)";
+            if (r.getItinerarios().size() > 1)
+                ruta += " (I/V)";
 
             System.out.printf("%-12s | %-12s | %-25s | %-10s%n",
                     r.getIdReserva(), r.getFechaCreacion(), ruta, r.getEstado());
@@ -391,7 +426,8 @@ public class MenuCliente {
 
         System.out.print("Ingrese el CÓDIGO de reserva (o '0' volver): ");
         String id = scanner.nextLine().trim().toUpperCase();
-        if (id.equals("0")) return;
+        if (id.equals("0"))
+            return;
 
         Reserva reservaSeleccionada = gestorReservas.buscarReservaPorId(id);
 
@@ -414,8 +450,12 @@ public class MenuCliente {
             int op = pedirIntRango("Opción", 1, 4);
 
             switch (op) {
-                case 1: imprimirReservaDetallada(reserva); break;
-                case 2: flujoModificarReserva(reserva); break;
+                case 1:
+                    imprimirReservaDetallada(reserva);
+                    break;
+                case 2:
+                    flujoModificarReserva(reserva);
+                    break;
                 case 3:
                     System.out.print("¿Cancelar definitivamente? (S/N): ");
                     if (scanner.nextLine().equalsIgnoreCase("S")) {
@@ -424,7 +464,9 @@ public class MenuCliente {
                         volver = true;
                     }
                     break;
-                case 4: volver = true; break;
+                case 4:
+                    volver = true;
+                    break;
             }
         }
     }
@@ -449,7 +491,8 @@ public class MenuCliente {
 
             // Resumen de equipaje
             System.out.print("     Equipaje: ");
-            if (p.getEquipajeContratado().isEmpty()) System.out.print("Ninguno");
+            if (p.getEquipajeContratado().isEmpty())
+                System.out.print("Ninguno");
             else {
                 for (Equipaje e : p.getEquipajeContratado()) {
                     System.out.print("[" + e.getClass().getSimpleName().replace("Equipaje", "") + "] ");
@@ -475,11 +518,13 @@ public class MenuCliente {
         System.out.println("4. Volver");
 
         int op = pedirIntRango("Opción", 1, 4);
-        if (op == 4) return;
+        if (op == 4)
+            return;
 
         System.out.print("Ingrese ID del Pasaje (ver en detalles) o '0' para cancelar: ");
         String idPasaje = scanner.nextLine();
-        if (idPasaje.equals("0")) return;
+        if (idPasaje.equals("0"))
+            return;
 
         Pasaje pasaje = reserva.buscarPasaje(idPasaje);
         if (pasaje == null) {
@@ -545,7 +590,8 @@ public class MenuCliente {
         System.out.println("4. Volver");
 
         int op = pedirIntRango("Opción", 1, 4);
-        if (op == 4) return; // Volver
+        if (op == 4)
+            return; // Volver
 
         try {
             if (op == 1) {
@@ -555,7 +601,8 @@ public class MenuCliente {
 
                 System.out.println(">> Ingrese NUEVA contraseña:");
                 String nueva = pedirPasswordValida();
-                if (nueva == null) return;
+                if (nueva == null)
+                    return;
 
                 gestorUsuarios.cambiarPassword(clienteLogueado.getId(), actual, nueva);
                 System.out.println("✅ Contraseña actualizada correctamente.");
@@ -564,16 +611,18 @@ public class MenuCliente {
                 // --- CAMBIAR EMAIL ---
                 System.out.println(">> Ingrese el NUEVO email:");
                 String nuevoEmail = pedirEmailValido();
-                if (nuevoEmail == null) return;
+                if (nuevoEmail == null)
+                    return;
 
                 gestorUsuarios.modificarEmail(clienteLogueado.getId(), nuevoEmail);
                 System.out.println("✅ Email actualizado. Use el nuevo email para ingresar.");
 
             } else if (op == 3) {
-                // --- CAMBIAR DATOS PERSONALES  ---
+                // --- CAMBIAR DATOS PERSONALES ---
                 System.out.println(">> Modificar Datos Personales");
 
-                // Pedimos los datos nuevos (pueden ser los mismos si el usuario los vuelve a escribir)
+                // Pedimos los datos nuevos (pueden ser los mismos si el usuario los vuelve a
+                // escribir)
                 System.out.print("Nuevo Nombre Completo: ");
                 String nuevoNombre = scanner.nextLine();
                 if (nuevoNombre.isEmpty()) {
@@ -588,9 +637,9 @@ public class MenuCliente {
                     return;
                 }
 
-
                 LocalDate nuevaFecha = pedirFechaNacimiento("Nueva Fecha de Nacimiento");
-                if (nuevaFecha == null) return; // Canceló
+                if (nuevaFecha == null)
+                    return; // Canceló
 
                 // Llamamos al gestor
                 gestorUsuarios.modificarDatosPersonales(clienteLogueado.getId(), nuevoNombre, nuevaFecha, nuevoDNI);
@@ -619,7 +668,8 @@ public class MenuCliente {
             System.out.print(mensaje + " (" + min + "-" + max + "): ");
             try {
                 int input = Integer.parseInt(scanner.nextLine());
-                if (input >= min && input <= max) return input;
+                if (input >= min && input <= max)
+                    return input;
                 System.out.println("❌ Opción fuera de rango.");
             } catch (NumberFormatException e) {
                 System.out.println("❌ Debe ingresar un número.");
@@ -631,7 +681,8 @@ public class MenuCliente {
         while (true) {
             System.out.print(mensaje + " (AAAA-MM-DD) o '0' cancelar: ");
             String input = scanner.nextLine().trim();
-            if (input.equals("0")) return null;
+            if (input.equals("0"))
+                return null;
             try {
                 LocalDate fecha = LocalDate.parse(input);
                 if (fecha.isBefore(LocalDate.now())) {
@@ -649,7 +700,8 @@ public class MenuCliente {
         while (true) {
             System.out.print(mensaje + " (AAAA-MM-DD) o '0' cancelar: ");
             String input = scanner.nextLine().trim();
-            if (input.equals("0")) return null;
+            if (input.equals("0"))
+                return null;
             try {
                 return LocalDate.parse(input);
             } catch (DateTimeParseException e) {
@@ -662,7 +714,8 @@ public class MenuCliente {
         while (true) {
             System.out.print("Email (o '0' cancelar): ");
             String email = scanner.nextLine().trim();
-            if (email.equals("0")) return null;
+            if (email.equals("0"))
+                return null;
 
             if (!email.contains("@")) {
                 System.out.println("   ❌ Falta el '@'.");
@@ -680,16 +733,21 @@ public class MenuCliente {
         while (true) {
             System.out.print("Contraseña (o '0' cancelar): ");
             String pass = scanner.nextLine();
-            if (pass.equals("0")) return null;
+            if (pass.equals("0"))
+                return null;
 
             boolean largo = pass.length() >= 6;
             boolean mayuscula = pass.chars().anyMatch(Character::isUpperCase);
             boolean numero = pass.chars().anyMatch(Character::isDigit);
 
-            if (!largo) System.out.println("   ❌ Mínimo 6 caracteres.");
-            else if (!mayuscula) System.out.println("   ❌ Falta una Mayúscula.");
-            else if (!numero) System.out.println("   ❌ Falta un Número.");
-            else return pass;
+            if (!largo)
+                System.out.println("   ❌ Mínimo 6 caracteres.");
+            else if (!mayuscula)
+                System.out.println("   ❌ Falta una Mayúscula.");
+            else if (!numero)
+                System.out.println("   ❌ Falta un Número.");
+            else
+                return pass;
         }
     }
 }

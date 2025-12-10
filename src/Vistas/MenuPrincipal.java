@@ -10,7 +10,6 @@ import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class MenuPrincipal {
 
     private Scanner scanner;
@@ -21,8 +20,8 @@ public class MenuPrincipal {
     private GestorAerolineas gestorAerolineas;
 
     public MenuPrincipal(Scanner scanner, GestorUsuarios gestorUsuarios,
-                         GestorVuelos gestorVuelos, GestorReservas gestorReservas,
-                         GestorAeropuertos gestorAeropuertos, GestorAerolineas gestorAerolineas) {
+            GestorVuelos gestorVuelos, GestorReservas gestorReservas,
+            GestorAeropuertos gestorAeropuertos, GestorAerolineas gestorAerolineas) {
         this.scanner = scanner;
         this.gestorUsuarios = gestorUsuarios;
         this.gestorVuelos = gestorVuelos;
@@ -34,7 +33,7 @@ public class MenuPrincipal {
     public void mostrar() {
         boolean salir = false;
         while (!salir) {
-            System.out.println("\n===== BIENVENIDO A AeroReserva =====");
+            System.out.println("\n===== BIENVENIDO A SkyBooking =====");
             System.out.println("1. Iniciar Sesión");
             System.out.println("2. Registrarse");
             System.out.println("3. Salir");
@@ -45,10 +44,17 @@ public class MenuPrincipal {
                 scanner.nextLine();
 
                 switch (opcion) {
-                    case 1: ejecutarLogin(); break;
-                    case 2: ejecutarRegistro(); break;
-                    case 3: salir = true; break;
-                    default: System.out.println("❌ Opción no válida.");
+                    case 1:
+                        ejecutarLogin();
+                        break;
+                    case 2:
+                        ejecutarRegistro();
+                        break;
+                    case 3:
+                        salir = true;
+                        break;
+                    default:
+                        System.out.println("❌ Opción no válida.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("❌ Error: Debe ingresar un número.");
@@ -59,7 +65,6 @@ public class MenuPrincipal {
 
     private void ejecutarLogin() {
         System.out.println("\n--- INICIAR SESIÓN ---");
-
 
         System.out.print("Email: ");
         String email = scanner.nextLine();
@@ -94,22 +99,27 @@ public class MenuPrincipal {
         try {
             System.out.print("Nombre completo: ");
             String nombre = scanner.nextLine();
-            if (nombre.equals("0")) return;
+            if (nombre.equals("0"))
+                return;
 
             System.out.print("DNI: ");
             String dni = scanner.nextLine();
-            if (dni.equals("0")) return;
+            if (dni.equals("0"))
+                return;
 
             LocalDate fechaNac = pedirFecha("Fecha de Nacimiento");
-            if (fechaNac == null) return;
+            if (fechaNac == null)
+                return;
 
             // --- VALIDACIÓN DE EMAIL EN TIEMPO REAL ---
             String email = pedirEmailValido();
-            if (email == null) return;
+            if (email == null)
+                return;
 
             // --- VALIDACIÓN DE PASSWORD EN TIEMPO REAL ---
             String password = pedirPasswordValida();
-            if (password == null) return;
+            if (password == null)
+                return;
 
             // Si llegó acá, los datos tienen el formato correcto.
             // El gestor hará la validación final (ej: si el email ya existe en la base).
@@ -129,7 +139,8 @@ public class MenuPrincipal {
         while (true) {
             System.out.print("Email: ");
             String email = scanner.nextLine().trim();
-            if (email.equals("0")) return null;
+            if (email.equals("0"))
+                return null;
 
             boolean tieneArroba = email.contains("@");
             boolean tienePunto = email.contains(".");
@@ -150,7 +161,8 @@ public class MenuPrincipal {
         while (true) {
             System.out.print("Contraseña: ");
             String pass = scanner.nextLine();
-            if (pass.equals("0")) return null;
+            if (pass.equals("0"))
+                return null;
 
             // Reglas: Min 6, 1 Mayúscula, 1 Número
             boolean largo = pass.length() >= 6;
@@ -173,7 +185,8 @@ public class MenuPrincipal {
         while (true) {
             System.out.print(mensaje + " (AAAA-MM-DD): ");
             String input = scanner.nextLine().trim();
-            if (input.equals("0")) return null;
+            if (input.equals("0"))
+                return null;
             try {
                 return LocalDate.parse(input);
             } catch (DateTimeParseException e) {

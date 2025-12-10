@@ -20,7 +20,7 @@ import java.util.Scanner;
  */
 public class Aplicacion {
 
-    // --- Atributos  ---
+    // --- Atributos ---
     // Son 'final' porque se instancian UNA VEZ y nunca cambian.
 
     // Gestores de "Solo Lectura" (Inventario)
@@ -52,16 +52,16 @@ public class Aplicacion {
         // 2. Inicializa los gestores que NO tienen dependencias
         this.gestorAeropuertos = new GestorAeropuertos(); // Lee aeropuertos.json
         this.gestorAerolineas = new GestorAerolineas(); // Lee aerolineas.json
-        this.gestorUsuarios = new GestorUsuarios();     // Lee usuarios.json e inicializa el contador de IDs
+        this.gestorUsuarios = new GestorUsuarios(); // Lee usuarios.json e inicializa el contador de IDs
 
         // 3. Inicializa los gestores que SÍ tienen dependencias
 
         // GestorVuelos necesita a GestorAeropuertos para validar aeropuertos
         this.gestorVuelos = new GestorVuelos(this.gestorAeropuertos);
 
-        // GestorReservas necesita a Usuarios (para millas/re-linkeo) y Vuelos (para asientos)
+        // GestorReservas necesita a Usuarios (para millas/re-linkeo) y Vuelos (para
+        // asientos)
         this.gestorReservas = new GestorReservas(this.gestorUsuarios, this.gestorVuelos);
-
 
     }
 
@@ -73,7 +73,7 @@ public class Aplicacion {
      */
     public void iniciar() {
 
-        System.out.println("Iniciando AeroReserva...");
+        System.out.println("Iniciando SkyBooking...");
 
         // 1. Crea el primer menú, "inyectando" todas las dependencias
         MenuPrincipal menuPrincipal = new MenuPrincipal(
@@ -82,15 +82,14 @@ public class Aplicacion {
                 gestorVuelos,
                 gestorReservas,
                 gestorAeropuertos,
-                gestorAerolineas
-        );
+                gestorAerolineas);
 
         // 2. Le pasa el control al menú principal
         menuPrincipal.mostrar();
 
         // 3. Cuando menuPrincipal.mostrar() termina (porque el usuario eligió "Salir"),
         // el metodo iniciar() finaliza.
-        System.out.println("\nGracias por usar AeroReserva. ¡Hasta luego!");
+        System.out.println("\nGracias por usar SkyBooking. ¡Hasta luego!");
 
         // 4. Cierra el recurso del scanner al final de la vida de la aplicación.
         scanner.close();

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class JsonManagerUsuarios {
 
-    private final String nombreArchivo = "usuarios.json";
+    private final String nombreArchivo = "Datos/usuarios.json";
 
     public JsonManagerUsuarios() {
     }

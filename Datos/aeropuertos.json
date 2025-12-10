@@ -1,0 +1,77 @@
+[
+    {
+        "codigoIATA": "EZE",
+        "ciudad": "Ezeiza",
+        "nombre": "Aeropuerto Internacional Ministro Pistarini"
+    },
+    {
+        "codigoIATA": "AEP",
+        "ciudad": "Buenos Aires",
+        "nombre": "Aeroparque Jorge Newbery"
+    },
+    {
+        "codigoIATA": "COR",
+        "ciudad": "Córdoba",
+        "nombre": "Aeropuerto Internacional Ingeniero Taravella"
+    },
+    {
+        "codigoIATA": "MDQ",
+        "ciudad": "Mar del Plata",
+        "nombre": "Aeropuerto Internacional Astor Piazzolla"
+    },
+    {
+        "codigoIATA": "BRC",
+        "ciudad": "Bariloche",
+        "nombre": "Aeropuerto Internacional Teniente Luis Candelaria"
+    },
+    {
+        "codigoIATA": "MDZ",
+        "ciudad": "Mendoza",
+        "nombre": "Aeropuerto Internacional El Plumerillo"
+    },
+    {
+        "codigoIATA": "SLA",
+        "ciudad": "Salta",
+        "nombre": "Aeropuerto Internacional Martín Miguel de Güemes"
+    },
+    {
+        "codigoIATA": "IGR",
+        "ciudad": "Puerto Iguazú",
+        "nombre": "Aeropuerto Internacional de Puerto Iguazú"
+    },
+    {
+        "codigoIATA": "USH",
+        "ciudad": "Ushuaia",
+        "nombre": "Aeropuerto Internacional Malvinas Argentinas"
+    },
+    {
+        "codigoIATA": "FTE",
+        "ciudad": "El Calafate",
+        "nombre": "Aeropuerto Comandante Armando Tola"
+    },
+    {
+        "codigoIATA": "REL",
+        "ciudad": "Trelew",
+        "nombre": "Aeropuerto Almirante Marco Andrés Zar"
+    },
+    {
+        "codigoIATA": "NQN",
+        "ciudad": "Neuquén",
+        "nombre": "Aeropuerto Internacional Presidente Perón"
+    },
+    {
+        "codigoIATA": "TUC",
+        "ciudad": "San Miguel de Tucumán",
+        "nombre": "Aeropuerto Internacional Teniente Benjamín Matienzo"
+    },
+    {
+        "codigoIATA": "ROS",
+        "ciudad": "Rosario",
+        "nombre": "Aeropuerto Internacional Rosario Islas Malvinas"
+    },
+    {
+        "codigoIATA": "BHI",
+        "ciudad": "Bahía Blanca",
+        "nombre": "Aeropuerto Comandante Espora"
+    }
+]

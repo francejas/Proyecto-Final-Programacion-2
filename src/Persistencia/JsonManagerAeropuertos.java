@@ -11,7 +11,7 @@ import java.util.List;
 
 public class JsonManagerAeropuertos {
 
-    private final String nombreArchivo = "aeropuertos.json";
+    private final String nombreArchivo = "Datos/aeropuertos.json";
 
     public JsonManagerAeropuertos() {
     }
